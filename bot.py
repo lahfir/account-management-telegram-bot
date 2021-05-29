@@ -107,7 +107,7 @@ def button(update: Update, context: CallbackContext):
                 chat_id,
                 caption="""🎁 TMS PACKAGES
 
-ADD ONE FULL <b>FREE MONTH</b> TO THE FOLLOWING VIP CHAT RATES:
+These are the prices for the <b>VIP Chat</b>
 <b>
 •  Monthly Rates - <i>$149.99</i>
 •  3 Month Rate  - <i>$299.99</i>
@@ -124,7 +124,7 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🚂💸""",
         #                 chat_id,
         #                 text="""🎁 TMS PACKAGES
 
-        # ADD ONE FULL <b>FREE MONTH</b> TO THE FOLLOWING VIP CHAT RATES:
+        # These are the prices for the <b>VIP Chat</b>
         # <b>
         # •  Monthly Rates - <i>$149.99</i>
         # •  3 Month Rate  - <i>$299.99</i>
@@ -345,7 +345,7 @@ def packages(update: Update, context: CallbackContext):
             chat_id,
             caption="""🎁 TMS PACKAGES
 
-ADD ONE FULL <b>FREE MONTH</b> TO THE FOLLOWING VIP CHAT RATES:
+These are the prices for the <b>VIP Chat</b>
 <b>
 •  Monthly Rates - <i>$149.99</i>
 •  3 Month Rate  - <i>$299.99</i>
@@ -362,7 +362,7 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🚂💸""",
         #                 chat_id,
         #                 text="""🎁 TMS PACKAGES
 
-        # ADD ONE FULL <b>FREE MONTH</b> TO THE FOLLOWING VIP CHAT RATES:
+        # These are the prices for the <b>VIP Chat</b>
         # <b>
         # •  Monthly Rates - <i>$149.99</i>
         # •  3 Month Rate  - <i>$299.99</i>
