@@ -110,8 +110,7 @@ def button(update: Update, context: CallbackContext):
 
                     (PayPal, Zelle, Venmo )
 
-                    GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🚂💸""",
-                reply_markup=reply_markup,
+                    GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🚂💸"""
             )
         except Exception as e:
             print(e)
@@ -313,8 +312,7 @@ ADD ONE FULL FREE MONTH TO THE FOLLOWING VIP CHAT RATES:
 
                 (PayPal, Zelle, Venmo )
 
-                GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🚂💸""",
-            reply_markup=reply_markup,
+                GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🚂💸"""
         )
     except Exception as e:
         print(e)
