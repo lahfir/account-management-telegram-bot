@@ -135,6 +135,9 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🚂💸""",
         #                 parse_mode=ParseMode.HTML,
         #             )
         except Exception as e:
+            update._effective_message.reply_text(
+                text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
+            )
             print(e)
     elif choice == "4":
         try:
@@ -356,6 +359,9 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🚂💸""",
         #             )
     except Exception as e:
         print(e)
+        update._effective_message.reply_text(
+            text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
+        )
 
 
 def start(update: Update, context: CallbackContext):
@@ -383,6 +389,9 @@ def start(update: Update, context: CallbackContext):
         )
     except Exception as e:
         print(e)
+        update._effective_message.reply_text(
+            text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
+        )
 
 
 def about_member(update: Update, context: CallbackContext):
@@ -447,6 +456,9 @@ def help(update: Update, context: CallbackContext):
         )
     except Exception as e:
         print(e)
+        update._effective_message.reply_text(
+            text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
+        )
 
 
 def welcome_new_member(update: Update, context: CallbackContext):
@@ -485,6 +497,9 @@ def welcome_new_member(update: Update, context: CallbackContext):
             # )
         except Exception as e:
             print(e)
+            update._effective_message.reply_text(
+                text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
+            )
 
 
 # bot.send_message(chat_id="-452615448", text="Welcome to")
@@ -517,6 +532,9 @@ def handle_message(update: Update, context: CallbackContext):
             )
         except Exception as e:
             print(e)
+            update._effective_message.reply_text(
+                text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
+            )
 
     if "hello" in text or "hi" in text or "hey" in text:
         try:
@@ -529,7 +547,7 @@ def handle_message(update: Update, context: CallbackContext):
 
             reply_markup = InlineKeyboardMarkup(keyboard)
             update._effective_message.reply_animation(
-                animation="https://media.giphy.com/media/ZZePOfSWwp9G6Ks8hS/giphy.gif",
+                animation="https://media.giphy.com/media/PRVDslxfTmwXkLinrk/giphy.gif",
                 caption="Hello 😊\n\nI'm TMS's JARVIS 🤖\n\nHow can I help you?",
                 reply_markup=reply_markup,
             )
@@ -540,6 +558,9 @@ def handle_message(update: Update, context: CallbackContext):
             # )
         except Exception as e:
             print(e)
+            update._effective_message.reply_text(
+                text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
+            )
 
 
 dispatcher.add_handler(CommandHandler("me", about_member))
