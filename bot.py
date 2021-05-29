@@ -135,10 +135,25 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🚂💸""",
         #                 parse_mode=ParseMode.HTML,
         #             )
         except Exception as e:
-            update._effective_message.reply_text(
-                text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
-            )
             print(e)
+            if e.message == "Forbidden: bot was blocked by the user":
+                keyboard = [
+                    [
+                        InlineKeyboardButton(
+                            "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
+                        ),
+                    ]
+                ]
+
+                reply_markup = InlineKeyboardMarkup(keyboard)
+                update._effective_message.reply_text(
+                    text="Uh! You might have blocked or have not Started JARVIS\n\nSTART him by clicking the button below 😊",
+                    reply_markup=reply_markup,
+                )
+            else:
+                update._effective_message.reply_text(
+                    text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
+                )
     elif choice == "4":
         try:
             bot.send_message(
@@ -159,7 +174,7 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🚂💸""",
 
 • If you did already then you are good!""",
             )
-        except TelegramError as e:
+        except Exception as e:
             print(e)
             if e.message == "Forbidden: bot was blocked by the user":
                 keyboard = [
@@ -359,9 +374,24 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🚂💸""",
         #             )
     except Exception as e:
         print(e)
-        update._effective_message.reply_text(
-            text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
-        )
+        if e.message == "Forbidden: bot was blocked by the user":
+            keyboard = [
+                [
+                    InlineKeyboardButton(
+                        "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
+                    ),
+                ]
+            ]
+
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            update._effective_message.reply_text(
+                text="Uh! You might have blocked or have not Started JARVIS\n\nSTART him by clicking the button below 😊",
+                reply_markup=reply_markup,
+            )
+        else:
+            update._effective_message.reply_text(
+                text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
+            )
 
 
 def start(update: Update, context: CallbackContext):
@@ -389,9 +419,24 @@ def start(update: Update, context: CallbackContext):
         )
     except Exception as e:
         print(e)
-        update._effective_message.reply_text(
-            text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
-        )
+        if e.message == "Forbidden: bot was blocked by the user":
+            keyboard = [
+                [
+                    InlineKeyboardButton(
+                        "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
+                    ),
+                ]
+            ]
+
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            update._effective_message.reply_text(
+                text="Uh! You might have blocked or have not Started JARVIS\n\nSTART him by clicking the button below 😊",
+                reply_markup=reply_markup,
+            )
+        else:
+            update._effective_message.reply_text(
+                text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
+            )
 
 
 def about_member(update: Update, context: CallbackContext):
@@ -456,9 +501,24 @@ def help(update: Update, context: CallbackContext):
         )
     except Exception as e:
         print(e)
-        update._effective_message.reply_text(
-            text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
-        )
+        if e.message == "Forbidden: bot was blocked by the user":
+            keyboard = [
+                [
+                    InlineKeyboardButton(
+                        "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
+                    ),
+                ]
+            ]
+
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            update._effective_message.reply_text(
+                text="Uh! You might have blocked or have not Started JARVIS\n\nSTART him by clicking the button below 😊",
+                reply_markup=reply_markup,
+            )
+        else:
+            update._effective_message.reply_text(
+                text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
+            )
 
 
 def welcome_new_member(update: Update, context: CallbackContext):
@@ -497,9 +557,24 @@ def welcome_new_member(update: Update, context: CallbackContext):
             # )
         except Exception as e:
             print(e)
-            update._effective_message.reply_text(
-                text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
-            )
+            if e.message == "Forbidden: bot was blocked by the user":
+                keyboard = [
+                    [
+                        InlineKeyboardButton(
+                            "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
+                        ),
+                    ]
+                ]
+
+                reply_markup = InlineKeyboardMarkup(keyboard)
+                update._effective_message.reply_text(
+                    text="Uh! You might have blocked or have not Started JARVIS\n\nSTART him by clicking the button below 😊",
+                    reply_markup=reply_markup,
+                )
+            else:
+                update._effective_message.reply_text(
+                    text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
+                )
 
 
 # bot.send_message(chat_id="-452615448", text="Welcome to")
@@ -532,11 +607,26 @@ def handle_message(update: Update, context: CallbackContext):
             )
         except Exception as e:
             print(e)
-            update._effective_message.reply_text(
-                text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
-            )
+            if e.message == "Forbidden: bot was blocked by the user":
+                keyboard = [
+                    [
+                        InlineKeyboardButton(
+                            "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
+                        ),
+                    ]
+                ]
 
-    if "hello" in text or "hi" in text or "hey" in text:
+                reply_markup = InlineKeyboardMarkup(keyboard)
+                update._effective_message.reply_text(
+                    text="Uh! You might have blocked or have not Started JARVIS\n\nSTART him by clicking the button below 😊",
+                    reply_markup=reply_markup,
+                )
+            else:
+                update._effective_message.reply_text(
+                    text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
+                )
+
+    if "hello" in text or "hi" in text or "hey" in text or "jarvis" in text or "j.a.r.v.i.s" in text:
         try:
             keyboard = [
                 [InlineKeyboardButton("👤About Me", callback_data="1")],
@@ -558,9 +648,24 @@ def handle_message(update: Update, context: CallbackContext):
             # )
         except Exception as e:
             print(e)
-            update._effective_message.reply_text(
-                text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
-            )
+            if e.message == "Forbidden: bot was blocked by the user":
+                keyboard = [
+                    [
+                        InlineKeyboardButton(
+                            "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
+                        ),
+                    ]
+                ]
+
+                reply_markup = InlineKeyboardMarkup(keyboard)
+                update._effective_message.reply_text(
+                    text="Uh! You might have blocked or have not Started JARVIS\n\nSTART him by clicking the button below 😊",
+                    reply_markup=reply_markup,
+                )
+            else:
+                update._effective_message.reply_text(
+                    text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
+                )
 
 
 dispatcher.add_handler(CommandHandler("me", about_member))
