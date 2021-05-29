@@ -12,7 +12,6 @@ channels = {d.entity.username: d.entity
 
 # choose the one that I want list users from
 channel = channels["hellochannel1234"]
-
 # get all the users and print them
 for u in client.get_participants(channel):
     print(u.id, u.first_name, u.last_name, u.username)
