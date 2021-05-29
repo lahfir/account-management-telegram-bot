@@ -114,9 +114,9 @@ These are the prices for the <b>VIP Chat</b>
 •  6 Month Rate. - <i>$499.99</i>
 •  Yearly Rates    - <i>$999.99</i>
 </b>
-💳 Payment Mode: <b>(PayPal, Zelle, Venmo)</b>
+💳 Payment Method: <b>(PayPal, Zelle, Venmo)</b>
 
-GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🚂💸""",
+GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                 parse_mode=ParseMode.HTML,
                 animation="https://media.giphy.com/media/fULcqyLb74wqHdd1gW/giphy.gif",
             )
@@ -131,9 +131,9 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🚂💸""",
         # •  6 Month Rate. - <i>$499.99</i>
         # •  Yearly Rates    - <i>$999.99</i>
         # </b>
-        # 💳 Payment Mode: <b>(PayPal, Zelle, Venmo)</b>
+        # 💳 Payment Method: <b>(PayPal, Zelle, Venmo)</b>
 
-        # GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🚂💸""",
+        # GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
         #                 parse_mode=ParseMode.HTML,
         #             )
         except Exception as e:
@@ -352,9 +352,9 @@ These are the prices for the <b>VIP Chat</b>
 •  6 Month Rate. - <i>$499.99</i>
 •  Yearly Rates    - <i>$999.99</i>
 </b>
-💳 Payment Mode: <b>(PayPal, Zelle, Venmo)</b>
+💳 Payment Method: <b>(PayPal, Zelle, Venmo)</b>
 
-GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🚂💸""",
+GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
             parse_mode=ParseMode.HTML,
             animation="https://media.giphy.com/media/fULcqyLb74wqHdd1gW/giphy.gif",
         )
@@ -369,9 +369,9 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🚂💸""",
         # •  6 Month Rate. - <i>$499.99</i>
         # •  Yearly Rates    - <i>$999.99</i>
         # </b>
-        # 💳 Payment Mode: <b>(PayPal, Zelle, Venmo)</b>
+        # 💳 Payment Method: <b>(PayPal, Zelle, Venmo)</b>
 
-        # GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🚂💸""",
+        # GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
         #                 parse_mode=ParseMode.HTML,
         #             )
     except Exception as e:
