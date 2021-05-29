@@ -7,6 +7,8 @@ import time
 # my_id = 1243113998
 # tms = 879137704
 
+
+
 bot = Bot("1849417198:AAHR2-o8d20OJ4sVzBMuHbcj8_ZEzHCpMZs")
 updater = Updater("1849417198:AAHR2-o8d20OJ4sVzBMuHbcj8_ZEzHCpMZs", use_context=True)
 
