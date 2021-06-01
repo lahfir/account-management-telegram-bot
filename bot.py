@@ -488,6 +488,12 @@ def start(update: Update, context: CallbackContext):
     last_name = update.message.from_user.last_name
     username = update.message.from_user.username
 
+    global memberChatId, memberUsername
+    memberChatId = chat_id
+    memberUsername = username
+
+    print(memberChatId, memberUsername)
+
     try:
         keyboard = [
             [InlineKeyboardButton("👤About Me", callback_data="1")],
@@ -500,7 +506,7 @@ def start(update: Update, context: CallbackContext):
         reply_markup = InlineKeyboardMarkup(keyboard)
         bot.send_message(
             chat_id,
-            text="Hello <b>{}</b> 😊\n\nI'm TMS's JARVIS 🤖\n\nWelcome to 𝑻𝒓𝒖𝒔𝒕𝒎𝒚𝒔𝒕𝒐𝒄𝒌'𝒔 𝑽𝑰𝑷 𝑪𝑯𝑨𝑻".format(
+            text="Hello <b>@{}</b> 😊\n\nI'm TMS's JARVIS 🤖\n\nWelcome to 𝑻𝒓𝒖𝒔𝒕𝒎𝒚𝒔𝒕𝒐𝒄𝒌'𝒔 𝑽𝑰𝑷 𝑪𝑯𝑨𝑻".format(
                 username,
             ),
             parse_mode=ParseMode.HTML,
@@ -768,6 +774,17 @@ def handle_message(update: Update, context: CallbackContext):
 
 NAME, MOBILE, INSTAGRAM, PACKAGE, DOJ, RESULT = range(6)
 
+(
+    memberName,
+    memberUsername,
+    memberInstagram,
+    memberMobile,
+    memberChatId,
+    memberTeleUsername,
+    memberPackage,
+    memberDoj,
+) = ("", "", "", "", "", "", "", "")
+
 
 def namehandler(update: Update, _: CallbackContext) -> int:
     user = update.message.from_user
@@ -788,7 +805,9 @@ def namehandler(update: Update, _: CallbackContext) -> int:
 
 def instagramhandler(update: Update, _: CallbackContext) -> int:
     user = update.message.from_user
+    global memberInstagram
 
+    memberInstagram = update.message.text
     keyboard = [
         [
             InlineKeyboardButton("✅Yes", callback_data="insta-y"),
@@ -832,22 +851,6 @@ def dojhandler(update: Update, _: CallbackContext) -> int:
     reply_markup = InlineKeyboardMarkup(keyboard)
     update.message.reply_text(
         f"Your DOJ: {datetime.now().strftime('%d-%m-%Y')}",
-        reply_markup=reply_markup,
-    )
-
-
-def packagehandler(update: Update, _: CallbackContext) -> int:
-    user = update.message.from_user
-
-    keyboard = [
-        [
-            InlineKeyboardButton("✅Yes", callback_data="package-y"),
-            InlineKeyboardButton("❌No", callback_data="package-n"),
-        ]
-    ]
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    update.message.reply_text(
-        f"Your Packgage: {iupdate.message.text})",
         reply_markup=reply_markup,
     )
 
@@ -911,7 +914,7 @@ def packageselector(update: Update, _: CallbackContext) -> int:
             reply_markup=reply_markup,
             parse_mode=ParseMode.HTML,
         )
-    
+
     elif (
         choice == "one-m-y"
         or choice == "three-m-y"
@@ -940,13 +943,18 @@ def yes_no(update: Update, context: CallbackContext):
     query.answer()
     choice = query.data
 
+    global memberName, memberUsername, memberInstagram, memberMobile, memberChatId, memberTeleUsername, memberPackage, memberDoj
+
     if choice == "name-y":
+        memberName = update._effective_message.text[10:]
+        print(memberName)
         bot.send_message(chat_id, text="Now enter your instagram handle with @")
         return INSTAGRAM
     elif choice == "name-n":
         update._effective_message.reply_text("Alright, Enter your correct Name please")
         return NAME
     elif choice == "insta-y":
+        print(memberInstagram)
         bot.send_message(chat_id, text="Now enter your Mobile Number")
         return MOBILE
     elif choice == "insta-n":
@@ -971,6 +979,8 @@ def yes_no(update: Update, context: CallbackContext):
         )
         return MOBILE
     elif choice == "doj-y":
+        memberDoj = update._effective_message.text[10:]
+        print(memberDoj)
         keyboard = [
             [InlineKeyboardButton("$149.99/Month", callback_data="one_m")],
             [InlineKeyboardButton("$299.99/3 Months", callback_data="three_m")],
