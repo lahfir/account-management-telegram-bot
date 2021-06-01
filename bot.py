@@ -8,7 +8,6 @@ import time
 # tms = 879137704
 
 
-
 bot = Bot("1849417198:AAHR2-o8d20OJ4sVzBMuHbcj8_ZEzHCpMZs")
 updater = Updater("1849417198:AAHR2-o8d20OJ4sVzBMuHbcj8_ZEzHCpMZs", use_context=True)
 
@@ -71,8 +70,37 @@ def button(update: Update, context: CallbackContext):
         try:
             bot.send_message(
                 chat_id=chat_id,
-                text="🔔 TMS RULES\n\n✨Please be respectful to everyone in the chat and follow the guidelines set by the chat admin and co-admin(s).\n\n✨Anyone violating group guidelines in group will be kicked immediately.\n\n✨Chat admin and co-admin(s) have the right to kick out potential troublemakers to keep their chat safe. Please be respectful toward their decision.\n\n✨Please be aware this is the internet and be more careful of the content you share online. Do not share your private information.\n\n✨No spamming - this also includes chain messages.\n\n✨No coin begging and advertising.",
-            )
+                text="""🔔 TMS RULES\n\nMoving forward if we put either of these symbols 🚀✅ after saying <b>SELL</b> with a picture of the stock it means we are <i>selling</i> the stock! 
+
+Sorry for all the confusion on our end! 
+
+Again, either the rocket (🚀)
+Or the check mark (✅)
+After Saying SELL
+
+A signal will always have an alert emoji followed by TMS Signal 
+ 🚨 <b>TMS Signal</b> 🚨
+
+We are following the last hours very closely. Make sure to stay alert.
+
+____________________________________________
+
+🚨 FOR NEW MEMBERS ONLY! 🚨 
+
+All new members send your Instagram username to @trustmystocks via telegram! Just click here 👉 @trustmystocks 👈
+<u>(Failure to do so will lead to removal from VIP Chat)</u>
+
+If you have done so already then thank you for cooperating . 🙏🙏
+
+If you are an old member and have not sent your Instagram username you will be removed by end of today. Please follow the instructions and message @trustmystocks
+
+Don’t forget to follow our Twitter  @trustmystocks as we provide constant updates. 
+(every follow helps)
+
+____________________________________________
+
+You should always be allocating 1 unit for trades unless told otherwise. 1 unit should comprise 5% of your total stock investment bankroll (i.e. if you have $1000 in your bankroll you should only be trading $50 per stock signal). You must also be patient.  Other advisers may be very aggressive in taking your money and pumping out stock picks left and right. However once you are broke they forget about you and move on to their next customer.  Our clients should be looking at their stock investments as a way of life not a get rich overnight scheme.""",
+            parse_mode = ParseMode.HTML)
         except TelegramError as e:
             print(e)
             if e.message == "Forbidden: bot was blocked by the user":
@@ -594,7 +622,7 @@ def handle_message(update: Update, context: CallbackContext):
     username = update._effective_message.chat.username
 
     text = str(update.effective_message.text).lower()
-    if text == "help" or "/help" in text:
+    if text == "help" or "/help" in text or "/me" in text or "/packages" in text:
         try:
             keyboard = [
                 [InlineKeyboardButton("👤About Me", callback_data="1")],
@@ -628,7 +656,13 @@ def handle_message(update: Update, context: CallbackContext):
                     text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
                 )
 
-    if "hello" in text or "hi" in text or "hey" in text or "jarvis" in text or "j.a.r.v.i.s" in text:
+    if (
+        "hello" in text
+        or "hi" in text
+        or "hey" in text
+        or "jarvis" in text
+        or "j.a.r.v.i.s" in text
+    ):
         try:
             keyboard = [
                 [InlineKeyboardButton("👤About Me", callback_data="1")],
