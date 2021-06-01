@@ -1,21 +1,16 @@
 from telegram import *
 from telegram.ext import *
 from telegram import TelegramError
-import datetime
-import time
 
 # my_id = 1243113998
 # tms = 879137704
-
 
 bot = Bot("1849417198:AAHR2-o8d20OJ4sVzBMuHbcj8_ZEzHCpMZs")
 updater = Updater("1849417198:AAHR2-o8d20OJ4sVzBMuHbcj8_ZEzHCpMZs", use_context=True)
 
 dispatcher = updater.dispatcher
 
-
 # chat.id sends in group whit from_user.id send [private]
-
 
 def button(update: Update, context: CallbackContext):
     query = update.callback_query
@@ -100,7 +95,8 @@ Don’t forget to follow our Twitter  @trustmystocks as we provide constant upda
 ____________________________________________
 
 You should always be allocating 1 unit for trades unless told otherwise. 1 unit should comprise 5% of your total stock investment bankroll (i.e. if you have $1000 in your bankroll you should only be trading $50 per stock signal). You must also be patient.  Other advisers may be very aggressive in taking your money and pumping out stock picks left and right. However once you are broke they forget about you and move on to their next customer.  Our clients should be looking at their stock investments as a way of life not a get rich overnight scheme.""",
-            parse_mode = ParseMode.HTML)
+                parse_mode=ParseMode.HTML,
+            )
         except TelegramError as e:
             print(e)
             if e.message == "Forbidden: bot was blocked by the user":
