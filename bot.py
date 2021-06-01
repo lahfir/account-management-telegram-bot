@@ -1,9 +1,36 @@
 from telegram import *
+import telegram
 from telegram.ext import *
 from telegram import TelegramError
 from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
 from datetime import datetime
 import time
+
+import pymongo
+from pymongo import MongoClient
+from datetime import datetime
+
+from pymongo.errors import DuplicateKeyError
+
+cluster = MongoClient(
+    "mongodb+srv://lahfir:mslahfir%40262001@clustertms.lkxcy.mongodb.net/test?authSource=admin&replicaSet=atlas-xqmx6k-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true"
+)
+if cluster:
+    print("Connected")
+
+db = cluster["tms"]
+collection = db["members"]
+
+model = {
+    "_id": "",
+    "name": "",
+    "doj": "",
+    "registered": "",
+    "approved": "",
+    "teleusername": "",
+    "instausername": "",
+    "package": "",
+}
 
 # my_id = 1243113998
 # tms = 879137704
@@ -43,6 +70,8 @@ def cal(update: Update, context: CallbackContext):
 
 
 def button(update: Update, context: CallbackContext):
+    global memberName, memberUsername, memberInstagram, memberChatId, memberTeleUsername, memberPackage, memberDoj, memberRegistered, memberApproved
+
     query = update.callback_query
     chat_id = update._effective_user.id
     message_id = update._effective_message.message_id
@@ -53,22 +82,41 @@ def button(update: Update, context: CallbackContext):
 
     # This will define which button the user tapped on (from what you assigned to "callback_data". As I assigned them "1" and "2"):
     choice = query.data
+    bot.send_chat_action(chat_id, action="typing")
 
     # Now u can define what choice ("callback_data") do what like this:
     if choice == "1":
         try:
-            bot.send_message(
-                chat_id=chat_id,
-                text="<i>TMS PROFILE</i>\n\n👤 Your Name: <b>{}</b>\n\n📅 Date Joined: <b>{}</b>\n\n✅ Your Instagram: <b>{}</b>\n\n💰 Your Package: <b>{}</b>\n\n".format(
-                    str([first_name if first_name else last_name][0])
-                    + " "
-                    + str([last_name if last_name else ""][0]),
-                    "Will be updated soon",
-                    "Will be updated soon",
-                    "Will be updated soon",
-                ),
-                parse_mode=ParseMode.HTML,
-            )
+            for x in collection.find({"_id": chat_id}):
+                if x["registered"] == "Y":
+                    bot.send_message(
+                        chat_id=chat_id,
+                        text="<i>TMS PROFILE</i>\n\n👤 Your Name: <b>{}</b>\n\n📅 Date Joined: <b>{}</b>\n\n✅ Your Instagram: <b>{}</b>\n\n💰 Your Package: <b>{}</b>\n\n\n✅ Approved: <b>{}</b>".format(
+                            x["name"],
+                            x["doj"],
+                            x["instausername"],
+                            x["package"],
+                            ["Yes" if x["approved"] == "Y" else "No"][0],
+                        ),
+                        parse_mode=ParseMode.HTML,
+                    )
+                    memberRegistered = "Y"
+                else:
+                    memberRegistered = "N"
+                    keyboard = [
+                        [
+                            InlineKeyboardButton(
+                                "👤New User Registration", callback_data="new-reg"
+                            )
+                        ]
+                    ]
+
+                    reply_markup = InlineKeyboardMarkup(keyboard)
+                    bot.send_message(
+                        chat_id=chat_id,
+                        text="Seems like you haven't registered, Register now by clicking the button below",
+                        reply_markup=reply_markup,
+                    )
         except TelegramError as e:
             print(e)
             if e.message == "Forbidden: bot was blocked by the user":
@@ -277,9 +325,13 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                 print(e)
     elif choice == "new-reg":
         try:
-            bot.send_chat_action(chat_id, action="typing")
-            bot.send_message(chat_id=chat_id, text="Enter your name")
-            return NAME
+            for x in collection.find({"_id": chat_id}):
+                if x["registered"] == "Y":
+                    bot.send_message(chat_id=chat_id, text="You have already registered. You can access your profile with /me command.\n\n If you want to edit your profile or extend the package, contact @trustmystocks.\n\nOption for extending the package through bot is <b>Coming Soon....</b> 💥",parse_mode=ParseMode.HTML)
+                    return NAME
+                else:
+                    bot.send_message(chat_id=chat_id, text="Enter your name")
+                    return NAME
         except Exception as e:
             print(e)
     # elif choice == "one_m":
@@ -494,6 +546,16 @@ def start(update: Update, context: CallbackContext):
 
     print(memberChatId, memberUsername)
 
+    model["_id"] = memberChatId
+    model["teleusername"] = memberUsername
+    model["approved"] = "N"
+    model["registered"] = "N"
+
+    try:
+        results = collection.insert_one(model)
+    except DuplicateKeyError as dke:
+        print(dke)
+
     try:
         keyboard = [
             [InlineKeyboardButton("👤About Me", callback_data="1")],
@@ -540,19 +602,40 @@ def about_member(update: Update, context: CallbackContext):
     last_name = update.message.from_user.last_name
     username = update.message.from_user.username
 
+    global memberChatId
+    memberChatId = chat_id
+
     try:
-        bot.send_message(
-            chat_id=chat_id,
-            text="<i>TMS PROFILE</i>\n\n👤 Your Name: <b>{}</b>\n\n📅 Date Joined: <b>{}</b>\n\n✅ Your Instagram: <b>{}</b>\n\n💰 Your Package: <b>{}</b>\n\n".format(
-                str([first_name if first_name else last_name][0])
-                + " "
-                + str([last_name if last_name else ""][0]),
-                "Will be updated soon",
-                "Will be updated soon",
-                "Will be updated soon",
-            ),
-            parse_mode=ParseMode.HTML,
-        )
+        for x in collection.find({"_id": chat_id}):
+            if x["registered"] == "Y":
+                bot.send_message(
+                    chat_id=chat_id,
+                    text="<i>TMS PROFILE</i>\n\n👤 Your Name: <b>{}</b>\n\n📅 Date Joined: <b>{}</b>\n\n✅ Your Instagram: <b>{}</b>\n\n💰 Your Package: <b>{}</b>\n\n\n✅ Approved: <b>{}</b>".format(
+                        x["name"],
+                        x["doj"],
+                        x["instausername"],
+                        x["package"],
+                        ["Yes" if x["approved"] == "Y" else "No"][0],
+                    ),
+                    parse_mode=ParseMode.HTML,
+                )
+                memberRegistered = "Y"
+            else:
+                memberRegistered = "N"
+                keyboard = [
+                    [
+                        InlineKeyboardButton(
+                            "👤New User Registration", callback_data="new-reg"
+                        )
+                    ]
+                ]
+
+                reply_markup = InlineKeyboardMarkup(keyboard)
+                bot.send_message(
+                    chat_id=chat_id,
+                    text="Seems like you haven't registered, Register now by clicking the button below",
+                    reply_markup=reply_markup,
+                )
     except TelegramError as e:
         if e.message == "Forbidden: bot was blocked by the user":
             keyboard = [
@@ -579,6 +662,9 @@ def help(update: Update, context: CallbackContext):
     first_name = update.message.from_user.first_name
     last_name = update.message.from_user.last_name
     username = update.message.from_user.username
+
+    global memberChatId
+    memberChatId = chat_id
     try:
         keyboard = [
             [InlineKeyboardButton("👤About Me", callback_data="1")],
@@ -772,7 +858,7 @@ def handle_message(update: Update, context: CallbackContext):
                 )
 
 
-NAME, MOBILE, INSTAGRAM, PACKAGE, DOJ, RESULT = range(6)
+NAME, INSTAGRAM, PACKAGE, DOJ, TELEGRAM = range(5)
 
 (
     memberName,
@@ -783,12 +869,15 @@ NAME, MOBILE, INSTAGRAM, PACKAGE, DOJ, RESULT = range(6)
     memberTeleUsername,
     memberPackage,
     memberDoj,
-) = ("", "", "", "", "", "", "", "")
+    memberRegistered,
+    memberApproved,
+) = ("", "", "", "", "", "", "", "", "", "")
 
 
 def namehandler(update: Update, _: CallbackContext) -> int:
     user = update.message.from_user
-
+    global memberName
+    memberName = update._effective_message.text[9:]
     keyboard = [
         [
             InlineKeyboardButton("✅Yes", callback_data="name-y"),
@@ -807,7 +896,7 @@ def instagramhandler(update: Update, _: CallbackContext) -> int:
     user = update.message.from_user
     global memberInstagram
 
-    memberInstagram = update.message.text
+    memberInstagram = f"https://instagram.com/{update.message.text[1:]}"
     keyboard = [
         [
             InlineKeyboardButton("✅Yes", callback_data="insta-y"),
@@ -822,18 +911,18 @@ def instagramhandler(update: Update, _: CallbackContext) -> int:
     )
 
 
-def mobilehandler(update: Update, _: CallbackContext) -> int:
+def telegramhandler(update: Update, _: CallbackContext) -> int:
     user = update.message.from_user
 
     keyboard = [
         [
-            InlineKeyboardButton("✅Yes", callback_data="mobile-y"),
-            InlineKeyboardButton("❌No", callback_data="mobile-n"),
+            InlineKeyboardButton("✅Yes", callback_data="telegram-y"),
+            InlineKeyboardButton("❌No", callback_data="telegram-n"),
         ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     update.message.reply_text(
-        f"Your Mobile: <b>{update.message.text}</b>",
+        f"Your Telegram Username: @<b>{update.message.from_user.username}</b>",
         reply_markup=reply_markup,
         parse_mode=ParseMode.HTML,
     )
@@ -855,13 +944,46 @@ def dojhandler(update: Update, _: CallbackContext) -> int:
     )
 
 
+def databaseentry():
+    collection.update_one(
+        {"_id": memberChatId},
+        {
+            "$set": {
+                "registered": "Y",
+                "name": memberName,
+                "doj": memberDoj,
+                "instausername": memberInstagram,
+                "package": memberPackage,
+            }
+        },
+    )
+    print(
+        memberChatId,
+        memberName,
+        memberApproved,
+        memberDoj,
+        memberInstagram,
+        memberPackage,
+        memberUsername,
+        memberRegistered,
+        memberTeleUsername,
+    )
+    bot.send_message(
+        chat_id=memberChatId,
+        text="You can access me using the following commands\n\n1. /help - I'll show all the available options\n2. /me - I'll show your TMS Profile\n3. /packages - I'll show the list of packages available in TMS",
+    )
+
+
 def packageselector(update: Update, _: CallbackContext) -> int:
     query = update.callback_query
     chat_id = update._effective_message.chat.id
     query.answer()
     choice = query.data
 
+    global memberPackage
+
     if choice == "one_m":
+        memberPackage = "$149.99/Month"
         keyboard = [
             [
                 InlineKeyboardButton("✅Yes", callback_data="one-m-y"),
@@ -876,6 +998,7 @@ def packageselector(update: Update, _: CallbackContext) -> int:
         )
 
     elif choice == "three_m":
+        memberPackage = "$299.99/3 Months"
         keyboard = [
             [
                 InlineKeyboardButton("✅Yes", callback_data="three-m-y"),
@@ -889,6 +1012,7 @@ def packageselector(update: Update, _: CallbackContext) -> int:
             reply_markup=reply_markup,
         )
     elif choice == "six_m":
+        memberPackage = "$499.99/6 Months"
         keyboard = [
             [
                 InlineKeyboardButton("✅Yes", callback_data="six-m-y"),
@@ -902,6 +1026,7 @@ def packageselector(update: Update, _: CallbackContext) -> int:
             parse_mode=ParseMode.HTML,
         )
     elif choice == "one_y":
+        memberPackage = "$999.9/Year"
         keyboard = [
             [
                 InlineKeyboardButton("✅Yes", callback_data="one-y-y"),
@@ -926,6 +1051,7 @@ def packageselector(update: Update, _: CallbackContext) -> int:
             text="Registration Successful, You'll receive a message from the admin shortly. 😉\n\n <b>Welcome to TRUSTMYSTOCKS</b>",
             parse_mode=ParseMode.HTML,
         )
+        databaseentry()
         return ConversationHandler.END
     elif (
         choice == "one-m-n"
@@ -946,7 +1072,6 @@ def yes_no(update: Update, context: CallbackContext):
     global memberName, memberUsername, memberInstagram, memberMobile, memberChatId, memberTeleUsername, memberPackage, memberDoj
 
     if choice == "name-y":
-        memberName = update._effective_message.text[10:]
         print(memberName)
         bot.send_message(chat_id, text="Now enter your instagram handle with @")
         return INSTAGRAM
@@ -955,14 +1080,22 @@ def yes_no(update: Update, context: CallbackContext):
         return NAME
     elif choice == "insta-y":
         print(memberInstagram)
-        bot.send_message(chat_id, text="Now enter your Mobile Number")
-        return MOBILE
+        keyboard = [
+            [KeyboardButton("@{}".format(update._effective_message.chat.username))]
+        ]
+        reply_markup = ReplyKeyboardMarkup(keyboard)
+        bot.send_message(
+            chat_id,
+            text="Now verify your Telegram Username by selecting on your keyboard",
+            reply_markup=reply_markup,
+        )
+        return TELEGRAM
     elif choice == "insta-n":
         bot.send_message(
             chat_id, text="Alright, Enter your correct Instagram Handle please"
         )
         return INSTAGRAM
-    elif choice == "mobile-y":
+    elif choice == "telegram-y":
         keyboard = [[KeyboardButton("/today"), KeyboardButton("/calendar")]]
         reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
         bot.send_message(
@@ -973,11 +1106,9 @@ def yes_no(update: Update, context: CallbackContext):
         )
         ReplyKeyboardRemove()
         return DOJ
-    elif choice == "mobile-n":
-        bot.send_message(
-            chat_id, text="Alright, Enter your correct Mobile Number please"
-        )
-        return MOBILE
+    elif choice == "telegram-n":
+        bot.send_message(chat_id, text="Alright, Enter your Telegram Username please")
+        return TELEGRAM
     elif choice == "doj-y":
         memberDoj = update._effective_message.text[10:]
         print(memberDoj)
@@ -1019,8 +1150,8 @@ conv_handler = ConversationHandler(
             MessageHandler(Filters.text, instagramhandler),
             CallbackQueryHandler(yes_no),
         ],
-        MOBILE: [
-            MessageHandler(Filters.text, mobilehandler),
+        TELEGRAM: [
+            MessageHandler(Filters.text, telegramhandler),
             CallbackQueryHandler(yes_no),
         ],
         DOJ: [
