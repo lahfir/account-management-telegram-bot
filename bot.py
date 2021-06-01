@@ -2,6 +2,8 @@ from telegram import *
 from telegram.ext import *
 from telegram import TelegramError
 from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
+from datetime import datetime
+import time
 
 # my_id = 1243113998
 # tms = 879137704
@@ -37,7 +39,7 @@ def cal(update: Update, context: CallbackContext):
             update._effective_message.chat.id,
             update._effective_message.message_id,
         )
-        print(result)
+        return RESULT
 
 
 def button(update: Update, context: CallbackContext):
@@ -246,44 +248,6 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                 update._effective_message.reply_text(
                     text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
                 )
-    elif choice == "5":
-        try:
-            bot.send_chat_action(chat_id, action="typing")
-            keyboard = [
-                [
-                    InlineKeyboardButton(
-                        "👤New User Registration", callback_data="new-reg"
-                    )
-                ],
-                [InlineKeyboardButton("🚀Signal Search", callback_data="signal-search")],
-            ]
-
-            reply_markup = InlineKeyboardMarkup(keyboard)
-            try:
-                bot.edit_message_text(
-                    "<b>Options</b>",
-                    chat_id=chat_id,
-                    message_id=message_id,
-                    reply_markup=reply_markup,
-                    parse_mode=ParseMode.HTML,
-                )
-            except:
-                bot.send_message(
-                    text="<b>Options</b>",
-                    chat_id=chat_id,
-                    reply_markup=reply_markup,
-                    parse_mode=ParseMode.HTML,
-                )
-        except Exception as e:
-            print(e)
-    elif choice == "new-reg":
-        try:
-            bot.send_chat_action(chat_id, action="typing")
-            bot.send_message(chat_id=chat_id, text="Enter your name")
-
-            print(query.message)
-        except Exception as e:
-            print(e)
     elif choice == "one_m":
         try:
             bot.send_message(
@@ -768,30 +732,194 @@ def handle_message(update: Update, context: CallbackContext):
                 )
 
 
-# def new(update: Update, context: CallbackContext):
-#     update.message.reply_text()
+def registration(update: Update, context: CallbackContext):
+    query = update.callback_query
+    query.answer()
 
-#     return GENDER
+    # This will define which button the user tapped on (from what you assigned to "callback_data". As I assigned them "1" and "2"):
+    choice = query.data
+
+    chat_id = update.effective_message.chat.id
+    message_id = update.effective_message.message_id
+    bot.send_chat_action(chat_id, action="typing")
+    if choice == "5":
+        try:
+            bot.send_chat_action(chat_id, action="typing")
+            keyboard = [
+                [
+                    InlineKeyboardButton(
+                        "👤New User Registration", callback_data="new-reg"
+                    )
+                ],
+                [InlineKeyboardButton("🚀Signal Search", callback_data="signal-search")],
+            ]
+
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            try:
+                bot.edit_message_text(
+                    "<b>Options</b>",
+                    chat_id=chat_id,
+                    message_id=message_id,
+                    reply_markup=reply_markup,
+                    parse_mode=ParseMode.HTML,
+                )
+            except:
+                bot.send_message(
+                    text="<b>Options</b>",
+                    chat_id=chat_id,
+                    reply_markup=reply_markup,
+                    parse_mode=ParseMode.HTML,
+                )
+        except Exception as e:
+            print(e)
+    elif choice == "new-reg":
+        try:
+            bot.send_chat_action(chat_id, action="typing")
+            bot.send_message(chat_id=chat_id, text="Enter your name")
+            return NAME
+        except Exception as e:
+            print(e)
 
 
-# conv_handler = ConversationHandler(
-#     entry_points=[CommandHandler("new", new)],
-#     states={
-#         GENDER: [MessageHandler(Filters.regex("^(Boy|Girl|Other)$"), gender)],
-#         PHOTO: [
-#             MessageHandler(Filters.photo, photo),
-#             CommandHandler("skip", skip_photo),
-#         ],
-#         LOCATION: [
-#             MessageHandler(Filters.location, location),
-#             CommandHandler("skip", skip_location),
-#         ],
-#         BIO: [MessageHandler(Filters.text & ~Filters.command, bio)],
-#     },
-#     fallbacks=[CommandHandler("cancel", cancel)],
-# )
+NAME, MOBILE, INSTAGRAM, PACKAGE, DOJ, RESULT = range(6)
 
 
+def namehandler(update: Update, _: CallbackContext) -> int:
+    user = update.message.from_user
+
+    keyboard = [
+        [
+            InlineKeyboardButton("✅Yes", callback_data="name-y"),
+            InlineKeyboardButton("❌No", callback_data="name-n"),
+        ]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    update.message.reply_text(
+        f"Your Name: <b>{update.message.text}</b>",
+        reply_markup=reply_markup,
+        parse_mode=ParseMode.HTML,
+    )
+
+
+def instagramhandler(update: Update, _: CallbackContext) -> int:
+    user = update.message.from_user
+
+    keyboard = [
+        [
+            InlineKeyboardButton("✅Yes", callback_data="insta-y"),
+            InlineKeyboardButton("❌No", callback_data="insta-n"),
+        ]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    update.message.reply_text(
+        f"Your Instagram: {update.message.text}\n\nhttps://instagram.com/{update.message.text[1:]}/?v=1",
+        reply_markup=reply_markup,
+        parse_mode=ParseMode.HTML,
+    )
+
+
+def mobilehandler(update: Update, _: CallbackContext) -> int:
+    user = update.message.from_user
+
+    keyboard = [
+        [
+            InlineKeyboardButton("✅Yes", callback_data="mobile-y"),
+            InlineKeyboardButton("❌No", callback_data="mobile-n"),
+        ]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    update.message.reply_text(
+        f"Your Mobile: <b>{update.message.text}</b>",
+        reply_markup=reply_markup,
+        parse_mode=ParseMode.HTML,
+    )
+
+
+def dojhandler(update: Update, _: CallbackContext) -> int:
+    user = update.message.from_user
+
+    keyboard = [
+        [
+            InlineKeyboardButton("✅Yes", callback_data="mobile-y"),
+            InlineKeyboardButton("❌No", callback_data="mobile-n"),
+        ]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    update.message.reply_text(
+        f"Your DOJ:{datetime.now().strftime('%d %m %Y')}",
+        reply_markup=reply_markup,
+    )
+
+
+def yes_no(update: Update, context: CallbackContext):
+    query = update.callback_query
+    chat_id = update._effective_message.chat.id
+    query.answer()
+    choice = query.data
+
+    if choice == "name-y":
+        bot.send_message(chat_id, text="Now enter your instagram handle with @")
+        return INSTAGRAM
+    elif choice == "name-n":
+        update._effective_message.reply_text("Alright, Enter your correct Name please")
+        return NAME
+    elif choice == "insta-y":
+        bot.send_message(chat_id, text="Now enter your Mobile Number")
+        return MOBILE
+    elif choice == "insta-n":
+        bot.send_message(
+            chat_id, text="Alright, Enter your correct Instagram Handle please"
+        )
+        return INSTAGRAM
+    elif choice == "mobile-y":
+        keyboard = [KeyboardButton("/today"), KeyboardButton("/calendar")]
+        reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+        bot.send_message(
+            chat_id,
+            text="Now Select Date of Joining. Select /today if you've joined today or to select a date click on /calendar",
+            replymarkup=reply_markup,
+            parse_mode=ParseMode.HTML,
+        )
+        return DOJ
+    elif choice == "mobile-n":
+        bot.send_message(
+            chat_id, text="Alright, Enter your correct Mobile Number please"
+        )
+        return MOBILE
+
+
+def cancel(update: Update, _: CallbackContext) -> int:
+    """Cancels and ends the conversation."""
+    user = update.message.from_user
+    update.message.reply_text(
+        "Bye! I hope we can talk again some day.", reply_markup=ReplyKeyboardRemove()
+    )
+
+    return ConversationHandler.END
+
+
+conv_handler = ConversationHandler(
+    entry_points=[CallbackQueryHandler(registration)],
+    states={
+        NAME: [MessageHandler(Filters.text, namehandler), CallbackQueryHandler(yes_no)],
+        INSTAGRAM: [
+            MessageHandler(Filters.text, instagramhandler),
+            CallbackQueryHandler(yes_no),
+        ],
+        MOBILE: [
+            MessageHandler(Filters.text, mobilehandler),
+            CallbackQueryHandler(yes_no),
+        ],
+        DOJ: [
+            CommandHandler("today", dojhandler),
+            CommandHandler("calendar", calendar),
+            CallbackQueryHandler(yes_no),
+        ],
+    },
+    fallbacks=[CommandHandler("cancel", cancel)],
+)
+
+dispatcher.add_handler(conv_handler)
 dispatcher.add_handler(CommandHandler("me", about_member))
 dispatcher.add_handler(CommandHandler("start", start))
 dispatcher.add_handler(CommandHandler("packages", packages))
@@ -800,4 +928,9 @@ dispatcher.add_handler(CommandHandler("calendar", calendar))
 dispatcher.add_handler(CallbackQueryHandler(button))
 dispatcher.add_handler(MessageHandler(Filters.text, handle_message))
 
-updater.start_polling()
+while True:
+    try:
+        updater.start_polling()
+        updater.idle()     
+    except ConnectionError as c:
+        time.sleep(15)
