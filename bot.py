@@ -15,8 +15,8 @@ dispatcher = updater.dispatcher
 
 
 def calendar(update: Update, context: CallbackContext):
-    calendar, step = DetailedTelegramCalendar().build()
     bot.send_chat_action(chat_id=update.message.chat.id, action="typing")
+    calendar, step = DetailedTelegramCalendar().build()
     bot.send_message(
         update.message.chat.id, f"Select {LSTEP[step]}", reply_markup=calendar
     )
@@ -43,9 +43,7 @@ def cal(update: Update, context: CallbackContext):
 def button(update: Update, context: CallbackContext):
     query = update.callback_query
     chat_id = update._effective_user.id
-
-    # print(chat_id)
-
+    message_id = update._effective_message.message_id
     first_name = update._effective_user.first_name
     last_name = update._effective_user.last_name
     username = update._effective_user.username
@@ -248,6 +246,44 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                 update._effective_message.reply_text(
                     text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
                 )
+    elif choice == "5":
+        try:
+            bot.send_chat_action(chat_id, action="typing")
+            keyboard = [
+                [
+                    InlineKeyboardButton(
+                        "👤New User Registration", callback_data="new-reg"
+                    )
+                ],
+                [InlineKeyboardButton("🚀Signal Search", callback_data="signal-search")],
+            ]
+
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            try:
+                bot.edit_message_text(
+                    "<b>Options</b>",
+                    chat_id=chat_id,
+                    message_id=message_id,
+                    reply_markup=reply_markup,
+                    parse_mode=ParseMode.HTML,
+                )
+            except:
+                bot.send_message(
+                    text="<b>Options</b>",
+                    chat_id=chat_id,
+                    reply_markup=reply_markup,
+                    parse_mode=ParseMode.HTML,
+                )
+        except Exception as e:
+            print(e)
+    elif choice == "new-reg":
+        try:
+            bot.send_chat_action(chat_id, action="typing")
+            bot.send_message(chat_id=chat_id, text="Enter your name")
+
+            print(query.message)
+        except Exception as e:
+            print(e)
     elif choice == "one_m":
         try:
             bot.send_message(
@@ -460,6 +496,7 @@ def start(update: Update, context: CallbackContext):
             [InlineKeyboardButton("📜Rules", callback_data="2")],
             [InlineKeyboardButton("🎁Packages", callback_data="3")],
             [InlineKeyboardButton("⚠Disclaimer", callback_data="4")],
+            [InlineKeyboardButton("⚙Options", callback_data="5")],
         ]
 
         reply_markup = InlineKeyboardMarkup(keyboard)
@@ -544,6 +581,7 @@ def help(update: Update, context: CallbackContext):
             [InlineKeyboardButton("📜Rules", callback_data="2")],
             [InlineKeyboardButton("🎁Packages", callback_data="3")],
             [InlineKeyboardButton("⚠Disclaimer", callback_data="4")],
+            [InlineKeyboardButton("⚙Options", callback_data="5")],
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         bot.send_message(
@@ -653,6 +691,7 @@ def handle_message(update: Update, context: CallbackContext):
                 [InlineKeyboardButton("📜Rules", callback_data="2")],
                 [InlineKeyboardButton("🎁Packages", callback_data="3")],
                 [InlineKeyboardButton("⚠Disclaimer", callback_data="4")],
+                [InlineKeyboardButton("⚙Options", callback_data="5")],
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
             update._effective_message.reply_text(
@@ -693,6 +732,7 @@ def handle_message(update: Update, context: CallbackContext):
                 [InlineKeyboardButton("📜Rules", callback_data="2")],
                 [InlineKeyboardButton("🎁Packages", callback_data="3")],
                 [InlineKeyboardButton("⚠Disclaimer", callback_data="4")],
+                [InlineKeyboardButton("⚙Options", callback_data="5")],
             ]
 
             reply_markup = InlineKeyboardMarkup(keyboard)
@@ -728,13 +768,36 @@ def handle_message(update: Update, context: CallbackContext):
                 )
 
 
+# def new(update: Update, context: CallbackContext):
+#     update.message.reply_text()
+
+#     return GENDER
+
+
+# conv_handler = ConversationHandler(
+#     entry_points=[CommandHandler("new", new)],
+#     states={
+#         GENDER: [MessageHandler(Filters.regex("^(Boy|Girl|Other)$"), gender)],
+#         PHOTO: [
+#             MessageHandler(Filters.photo, photo),
+#             CommandHandler("skip", skip_photo),
+#         ],
+#         LOCATION: [
+#             MessageHandler(Filters.location, location),
+#             CommandHandler("skip", skip_location),
+#         ],
+#         BIO: [MessageHandler(Filters.text & ~Filters.command, bio)],
+#     },
+#     fallbacks=[CommandHandler("cancel", cancel)],
+# )
+
+
 dispatcher.add_handler(CommandHandler("me", about_member))
 dispatcher.add_handler(CommandHandler("start", start))
 dispatcher.add_handler(CommandHandler("packages", packages))
 dispatcher.add_handler(CommandHandler("help", help))
 dispatcher.add_handler(CommandHandler("calendar", calendar))
-dispatcher.add_handler(CallbackQueryHandler(cal))
-dispatcher.add_handler(MessageHandler(Filters.text, handle_message))
 dispatcher.add_handler(CallbackQueryHandler(button))
+dispatcher.add_handler(MessageHandler(Filters.text, handle_message))
 
 updater.start_polling()
