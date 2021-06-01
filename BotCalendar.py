@@ -1,17 +1,21 @@
-from typing import Text
 from telebot import *
 from telebot import types
 import telegram
+from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
 
 bot1 = TeleBot("1540433300:AAFhC6LYbtzGi3qAp6_Ctd7Qn0zm10WFOtA")
-
-from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
 
 
 @bot1.message_handler(commands=["calendar", "today"])
 def calendar(m):
     calendar, step = DetailedTelegramCalendar().build()
-    bot1.send_message(m.chat.id, f"Select {LSTEP[step]}", reply_markup=calendar)
+    bot1.send_message(
+        m.chat.id,
+        f"Select <b>Today</b> if joined today or Select <b>{LSTEP[step]}</b>",
+        reply_markup=calendar,
+        parse_mode="html",
+    )
+
 
 @bot1.callback_query_handler(func=DetailedTelegramCalendar.func())
 def cal(c):
@@ -91,20 +95,65 @@ def handle_message(message):
             parse_mode="html",
             reply_markup=keyboard,
         )
-    else:
-        bot1.send_chat_action(chat_id=message.chat.id, action="typing")
-        bot1.reply_to(
-            message,
-            "Sorry I can't understand 😕\n\nYou can access me with the below Commands \n\n/start or /help 😊",
+    # else:
+    #     bot1.send_chat_action(chat_id=message.chat.id, action="typing")
+    #     bot1.reply_to(
+    #         message,
+    #         "Sorry I can't understand 😕\n\nYou can access me with the below Commands \n\n/start or /help 😊",
+    #     )
+
+
+def NameHandler(message):
+    try:
+        chat_id = message.chat.id
+        keyboard = types.InlineKeyboardMarkup()
+        keyboard.row(
+            types.InlineKeyboardButton("Yes", callback_data="name-y"),
+            types.InlineKeyboardButton("No", callback_data="name-n"),
         )
+        msg = bot1.send_message(
+            chat_id=chat_id, text=f"Your Name {message.text}", reply_markup=keyboard
+        )
+    except Exception as e:
+        bot1.reply_to(message, "oooops")
 
 
-def askName(message):
-    bot1.send_message(message.chat.id, "Hello")
+def InstagramHandler(message):
+    try:
+        chat_id = message.chat.id
+        keyboard = types.InlineKeyboardMarkup()
+        keyboard.row(
+            types.InlineKeyboardButton("Yes", callback_data="insta-y"),
+            types.InlineKeyboardButton("No", callback_data="insta-n"),
+        )
+        msg = bot1.send_message(
+            chat_id=chat_id,
+            text=f"Your Instagram Handle {message.text}",
+            reply_markup=keyboard,
+        )
+    except Exception as e:
+        bot1.reply_to(message, "oooops")
+
+
+def MobileNumberHandler(message):
+    try:
+        chat_id = message.chat.id
+        keyboard = types.InlineKeyboardMarkup()
+        keyboard.row(
+            types.InlineKeyboardButton("Yes", callback_data="mn-y"),
+            types.InlineKeyboardButton("No", callback_data="mn-n"),
+        )
+        msg = bot1.send_message(
+            chat_id=chat_id,
+            text=f"Your Mobile Number {message.text}",
+            reply_markup=keyboard,
+        )
+    except Exception as e:
+        bot1.reply_to(message, "oooops")
 
 
 @bot1.callback_query_handler(func=lambda call: True)
-def button(m):
+def button1(m):
     query = m
     chat_id = m.message.chat.id
     first_name = m.message.chat.first_name
@@ -116,12 +165,13 @@ def button(m):
     if choice == "1":
         try:
             bot1.send_chat_action(chat_id=chat_id, action="typing")
-            bot1.send_message(
+            namereq = bot1.send_message(
                 chat_id=chat_id,
                 text="Please Enter your name",
                 parse_mode="html",
             )
-            print(bot1.get_chat(chat_id=chat_id))
+            bot1.register_next_step_handler(namereq, NameHandler)
+
         except telegram.error.BadRequest as blocked:
             if "Forbidden: bot1 was blocked by the user" in blocked.message:
                 bot1.send_chat_action(chat_id=chat_id, action="typing")
@@ -148,6 +198,51 @@ def button(m):
             if "Forbidden: bot1 was blocked by the user" in blocked.message:
                 bot1.send_chat_action(chat_id=chat_id, action="typing")
                 bot1.send_message(chat_id=chat_id, text="Blocked")
+    if choice == "name-y":
+        try:
+            bot1.send_chat_action(chat_id=chat_id, action="typing")
+            instareq = bot1.send_message(
+                chat_id=chat_id,
+                text="Please Enter your Instagram Handle with <b>@</b>",
+                parse_mode="html",
+            )
+            bot1.register_next_step_handler(instareq, InstagramHandler)
+
+        except telegram.error.BadRequest as blocked:
+            if "Forbidden: bot1 was blocked by the user" in blocked.message:
+                bot1.send_chat_action(chat_id=chat_id, action="typing")
+                bot1.send_message(chat_id=chat_id, text="Blocked")
+
+    if choice == "insta-y":
+        try:
+            bot1.send_chat_action(chat_id=chat_id, action="typing")
+            mobilereq = bot1.send_message(
+                chat_id=chat_id,
+                text="Please Enter your <b>mobile number</b>",
+                parse_mode="html",
+            )
+            bot1.register_next_step_handler(mobilereq, MobileNumberHandler)
+
+        except telegram.error.BadRequest as blocked:
+            if "Forbidden: bot1 was blocked by the user" in blocked.message:
+                bot1.send_chat_action(chat_id=chat_id, action="typing")
+                bot1.send_message(chat_id=chat_id, text="Blocked")
+
+    if choice == "mn-y":
+        try:
+            bot1.send_chat_action(chat_id=chat_id, action="typing")
+            datereq = bot1.send_message(
+                chat_id=chat_id,
+                text="Please Selecct the date of joining",
+                parse_mode="html",
+            )
+            bot1.register_next_step_handler(datereq, calendar)
+
+        except telegram.error.BadRequest as blocked:
+            if "Forbidden: bot1 was blocked by the user" in blocked.message:
+                bot1.send_chat_action(chat_id=chat_id, action="typing")
+                bot1.send_message(chat_id=chat_id, text="Blocked")
+
 
 
 bot1.polling()
