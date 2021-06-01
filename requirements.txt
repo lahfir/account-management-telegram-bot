@@ -2,3 +2,4 @@ python-telegram-bot
 pyTelegramBotAPI
 python-telegram-bot-calendar
 pymongo
+dnspython
