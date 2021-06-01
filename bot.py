@@ -13,8 +13,10 @@ dispatcher = updater.dispatcher
 
 # chat.id sends in group whit from_user.id send [private]
 
+
 def calendar(update: Update, context: CallbackContext):
     calendar, step = DetailedTelegramCalendar().build()
+    bot.send_chat_action(chat_id=update.message.chat.id, action="typing")
     bot.send_message(
         update.message.chat.id, f"Select {LSTEP[step]}", reply_markup=calendar
     )
@@ -31,7 +33,9 @@ def cal(update: Update, context: CallbackContext):
         )
     elif result:
         bot.edit_message_text(
-            f"You selected {result}", update._effective_message.chat.id, update._effective_message.message_id
+            f"You selected {result}",
+            update._effective_message.chat.id,
+            update._effective_message.message_id,
         )
         print(result)
 
@@ -245,7 +249,7 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                     text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
                 )
     elif choice == "one_m":
-        try:   
+        try:
             bot.send_message(
                 chat_id=chat_id,
                 text="Thank you for choosing the package. We've sent your choice to the admin and he'll be getting back to you within today. Cheers!!! 🍴",
@@ -728,9 +732,9 @@ dispatcher.add_handler(CommandHandler("me", about_member))
 dispatcher.add_handler(CommandHandler("start", start))
 dispatcher.add_handler(CommandHandler("packages", packages))
 dispatcher.add_handler(CommandHandler("help", help))
-dispatcher.add_handler(MessageHandler(Filters.text, handle_message))
-dispatcher.add_handler(CallbackQueryHandler(button))
 dispatcher.add_handler(CommandHandler("calendar", calendar))
 dispatcher.add_handler(CallbackQueryHandler(cal))
+dispatcher.add_handler(MessageHandler(Filters.text, handle_message))
+dispatcher.add_handler(CallbackQueryHandler(button))
 
 updater.start_polling()
