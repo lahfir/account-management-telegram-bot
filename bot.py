@@ -327,11 +327,47 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
         try:
             for x in collection.find({"_id": chat_id}):
                 if x["registered"] == "Y":
-                    bot.send_message(chat_id=chat_id, text="You have already registered. You can access your profile with /me command.\n\n If you want to edit your profile or extend the package, contact @trustmystocks.\n\nOption for extending the package through bot is <b>Coming Soon....</b> 💥",parse_mode=ParseMode.HTML)
-                    return NAME
+                    bot.send_message(
+                        chat_id=chat_id,
+                        text="You have already registered. You can access your profile with /me command.\n\n If you want to edit your profile or extend the package, contact @trustmystocks.\n\nOption for extending the package through bot is <b>Coming Soon....</b> 💥",
+                        parse_mode=ParseMode.HTML,
+                    )
                 else:
                     bot.send_message(chat_id=chat_id, text="Enter your name")
                     return NAME
+        except Exception as e:
+            print(e)
+    elif choice == "signal-search":
+        try:
+            for x in collection.find({"_id": chat_id}):
+                keyboard = [
+                    [
+                        InlineKeyboardButton(
+                            "👤New User Registration", callback_data="new-reg"
+                        )
+                    ]
+                ]
+
+                reply_markup = InlineKeyboardMarkup(keyboard)
+                if x["registered"] == "Y":
+                    if x["approved"] == "Y":
+                        bot.send_message(
+                            chat_id=chat_id,
+                            text="Signal Access Coming Soon. Please wait for some day ☺",
+                            parse_mode=ParseMode.HTML,
+                        )
+                elif x["registered"] == "N":
+                    bot.send_message(
+                        chat_id=chat_id,
+                        text="You haven't registered yet, Click on the button below to register 👇",
+                        reply_markup=reply_markup,
+                    )
+                elif x["registered"] == "Y":
+                    if x["approved"] == "N":
+                        bot.send_message(
+                            chat_id=chat_id,
+                            text="You aren't approved yet, Don't worry I will intimate the admin to approve you ASAP. Once approved, you'll have access to Signal Search ☺",
+                        )
         except Exception as e:
             print(e)
     # elif choice == "one_m":
@@ -876,8 +912,7 @@ NAME, INSTAGRAM, PACKAGE, DOJ, TELEGRAM = range(5)
 
 def namehandler(update: Update, _: CallbackContext) -> int:
     user = update.message.from_user
-    global memberName
-    memberName = update._effective_message.text[9:]
+
     keyboard = [
         [
             InlineKeyboardButton("✅Yes", callback_data="name-y"),
@@ -1072,6 +1107,7 @@ def yes_no(update: Update, context: CallbackContext):
     global memberName, memberUsername, memberInstagram, memberMobile, memberChatId, memberTeleUsername, memberPackage, memberDoj
 
     if choice == "name-y":
+        memberName = update._effective_message.text[11:]
         print(memberName)
         bot.send_message(chat_id, text="Now enter your instagram handle with @")
         return INSTAGRAM
