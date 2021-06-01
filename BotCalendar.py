@@ -177,7 +177,7 @@ def button1(m):
                 bot1.send_chat_action(chat_id=chat_id, action="typing")
                 bot1.send_message(chat_id=chat_id, text="Blocked")
 
-    if choice == "2":
+    elif choice == "2":
         try:
             bot1.send_chat_action(chat_id=chat_id, action="typing")
 
@@ -194,11 +194,11 @@ def button1(m):
                 parse_mode="html",
                 reply_markup=keyboard,
             )
-        except:
+        except telegram.error.BadRequest as blocked:
             if "Forbidden: bot1 was blocked by the user" in blocked.message:
                 bot1.send_chat_action(chat_id=chat_id, action="typing")
                 bot1.send_message(chat_id=chat_id, text="Blocked")
-    if choice == "name-y":
+    elif choice == "name-y":
         try:
             bot1.send_chat_action(chat_id=chat_id, action="typing")
             instareq = bot1.send_message(
@@ -213,7 +213,7 @@ def button1(m):
                 bot1.send_chat_action(chat_id=chat_id, action="typing")
                 bot1.send_message(chat_id=chat_id, text="Blocked")
 
-    if choice == "insta-y":
+    elif choice == "insta-y":
         try:
             bot1.send_chat_action(chat_id=chat_id, action="typing")
             mobilereq = bot1.send_message(
@@ -228,7 +228,7 @@ def button1(m):
                 bot1.send_chat_action(chat_id=chat_id, action="typing")
                 bot1.send_message(chat_id=chat_id, text="Blocked")
 
-    if choice == "mn-y":
+    elif choice == "mn-y":
         try:
             bot1.send_chat_action(chat_id=chat_id, action="typing")
             datereq = bot1.send_message(
@@ -244,4 +244,8 @@ def button1(m):
                 bot1.send_message(chat_id=chat_id, text="Blocked")
 
 
-bot1.polling()
+while True:
+    try:
+        bot1.polling(none_stop=True,timeout=100000)
+    except Exception:
+        time.sleep(2)

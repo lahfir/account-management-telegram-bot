@@ -11,10 +11,10 @@ if cluster:
     print("Connected")
 
 db = cluster["tms"]
-collection = db["test"]
+collection = db["members"]
 
 try:
-    results = collection.insert_one({"_id": 0, "name": "lahfir", "date": datetime.now()})
-
+    for x in collection.find({"_id": 1243113998}):
+        print(x)
 except DuplicateKeyError as dke:
     print(dke)
