@@ -1,1 +1,2 @@
-worker: python bot.py, python BotCalendar.py
+worker: python bot.python
+worker: python BotCalendar.py
