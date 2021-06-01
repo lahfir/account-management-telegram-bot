@@ -5,7 +5,6 @@ from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
 
 bot1 = TeleBot("1540433300:AAFhC6LYbtzGi3qAp6_Ctd7Qn0zm10WFOtA")
 
-
 @bot1.message_handler(commands=["calendar", "today"])
 def calendar(m):
     calendar, step = DetailedTelegramCalendar().build()
@@ -245,4 +244,4 @@ def button1(m):
 
 
 
-bot1.polling()
+bot1.polling(none_stop=True,timeout=123)

@@ -222,7 +222,7 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                     text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
                 )
     elif choice == "one_m":
-        try:
+        try:   
             bot.send_message(
                 chat_id=chat_id,
                 text="Thank you for choosing the package. We've sent your choice to the admin and he'll be getting back to you within today. Cheers!!! 🍴",
@@ -709,4 +709,3 @@ dispatcher.add_handler(MessageHandler(Filters.text, handle_message))
 dispatcher.add_handler(CallbackQueryHandler(button))
 
 updater.start_polling()
-bot1.polling(none_stop=True, timeout=123)
