@@ -1,6 +1,7 @@
 from telegram import *
 from telegram.ext import *
 from telegram import TelegramError
+from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
 
 # my_id = 1243113998
 # tms = 879137704
@@ -11,6 +12,28 @@ updater = Updater("1849417198:AAHR2-o8d20OJ4sVzBMuHbcj8_ZEzHCpMZs", use_context=
 dispatcher = updater.dispatcher
 
 # chat.id sends in group whit from_user.id send [private]
+
+def calendar(update: Update, context: CallbackContext):
+    calendar, step = DetailedTelegramCalendar().build()
+    bot.send_message(
+        update.message.chat.id, f"Select {LSTEP[step]}", reply_markup=calendar
+    )
+
+
+def cal(update: Update, context: CallbackContext):
+    result, key, step = DetailedTelegramCalendar().process(update.callback_query.data)
+    if not result and key:
+        bot.edit_message_text(
+            f"Select {LSTEP[step]}",
+            update._effective_message.chat.id,
+            update._effective_message.message_id,
+            reply_markup=key,
+        )
+    elif result:
+        bot.edit_message_text(
+            f"You selected {result}", update._effective_message.chat.id, update._effective_message.message_id
+        )
+        print(result)
 
 
 def button(update: Update, context: CallbackContext):
@@ -707,5 +730,7 @@ dispatcher.add_handler(CommandHandler("packages", packages))
 dispatcher.add_handler(CommandHandler("help", help))
 dispatcher.add_handler(MessageHandler(Filters.text, handle_message))
 dispatcher.add_handler(CallbackQueryHandler(button))
+dispatcher.add_handler(CommandHandler("calendar", calendar))
+dispatcher.add_handler(CallbackQueryHandler(cal))
 
 updater.start_polling()

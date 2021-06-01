@@ -1,9 +1,10 @@
 from telebot import *
 from telebot import types
-import telegram
+import telegram, time, requests
 from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
 
 bot1 = TeleBot("1540433300:AAFhC6LYbtzGi3qAp6_Ctd7Qn0zm10WFOtA")
+
 
 @bot1.message_handler(commands=["calendar", "today"])
 def calendar(m):
@@ -243,5 +244,4 @@ def button1(m):
                 bot1.send_message(chat_id=chat_id, text="Blocked")
 
 
-
-bot1.polling(none_stop=True,timeout=123)
+bot1.polling()

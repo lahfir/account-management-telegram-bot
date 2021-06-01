@@ -4,7 +4,6 @@ from telegram.ext import *
 from telegram import TelegramError
 from telebot import *
 from telebot import types
-import telegram
 from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
 
 
