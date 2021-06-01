@@ -1,15 +1,13 @@
-from telegram import *
-import telegram
-from telegram.ext import *
-from telegram import TelegramError
-from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
-from datetime import datetime
 import time
-import pymongo
-from pymongo import MongoClient
 from datetime import datetime
-
+import pymongo
+import telegram
+from pymongo import MongoClient
 from pymongo.errors import DuplicateKeyError
+from telegram import *
+from telegram import TelegramError
+from telegram.ext import *
+from telegram_bot_calendar import LSTEP, DetailedTelegramCalendar
 
 cluster = MongoClient(
     "mongodb+srv://lahfir:mslahfir%40262001@clustertms.lkxcy.mongodb.net/test?authSource=admin&replicaSet=atlas-xqmx6k-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true"
@@ -65,7 +63,7 @@ def cal(update: Update, context: CallbackContext):
             update._effective_message.chat.id,
             update._effective_message.message_id,
         )
-        return RESULT
+        return result
 
 
 def button(update: Update, context: CallbackContext):
