@@ -971,7 +971,21 @@ def dojhandler(update: Update, _: CallbackContext) -> int:
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     update.message.reply_text(
-        f"Your DOJ: {datetime.now().strftime('%d-%m-%Y')}",
+        f"Your DOJ: {datetime.now().strftime('%m-%d-%Y')}",
+        reply_markup=reply_markup,
+    )
+
+
+def calendardojhandler(update: Update, context: CallbackContext, result) -> int:
+    keyboard = [
+        [
+            InlineKeyboardButton("✅Yes", callback_data="doj-y"),
+            InlineKeyboardButton("❌No", callback_data="doj-n"),
+        ]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    update._effective_message.reply_text(
+        f"Your DOJ: {result}",
         reply_markup=reply_markup,
     )
 
@@ -1164,6 +1178,22 @@ def yes_no(update: Update, context: CallbackContext):
         bot.send_message(chat_id, text="Alright, Please select the date correctly")
         return DOJ
 
+    result, key, step = DetailedTelegramCalendar().process(update.callback_query.data)
+    if not result and key:
+        bot.edit_message_text(
+            f"Select {LSTEP[step]}",
+            update._effective_message.chat.id,
+            update._effective_message.message_id,
+            reply_markup=key,
+        )
+    elif result:
+        bot.edit_message_text(
+            f"You selected {result}",
+            update._effective_message.chat.id,
+            update._effective_message.message_id,
+        )
+        calendardojhandler(update, context, result)
+
 
 def cancel(update: Update, _: CallbackContext) -> int:
     """Cancels and ends the conversation."""
@@ -1191,7 +1221,6 @@ conv_handler = ConversationHandler(
             CommandHandler("today", dojhandler),
             CallbackQueryHandler(yes_no),
             CommandHandler("calendar", calendar),
-            CallbackQueryHandler(cal),
         ],
         PACKAGE: [CallbackQueryHandler(packageselector)],
     },
