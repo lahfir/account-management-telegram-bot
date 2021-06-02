@@ -40,6 +40,75 @@ dispatcher = updater.dispatcher
 # chat.id sends in group whit from_user.id send [private]
 
 
+def rules():
+    rules = """🟢 TMS RULES\n\nMoving forward if we put either of these symbols 🚀✅ after saying SELL with a picture of the stock it means we are selling the stock! 
+
+
+____________________________
+
+
+Don’t forget to follow our Twitter  @trustmystocks as we provide constant updates. 
+(every follow helps)
+
+____________________________
+
+You must be aware of Risk Management when Trading. You CANNOT get carried away on any one given Signal. That would be a ROOKIE mistake and can be very costly.  Stocks go in two directions and you must be prepared to sustain certain losses without bankrupting your bankroll. 
+
+You should always allocate one unit for trades unless told otherwise. One unit should comprise 5%-8% of your total stock investment bankroll (i.e. if you have $1000 in your bankroll you should only be trading approximately $50-$80 per stock signal). We preach this often so you can invest in more signals. 
+
+You must also be patient.  Other advisers may be very aggressive in taking your money and pumping out stock picks non-stop all day. However, once you’re BROKE they forget about you and move on to new customers.  We take the long term approach because we want you as part of our family for a long time. Our clients should be looking at their stock investments as a way of life not a get rich overnight scheme. Yes some signals could go up 100% plus, but you have to maintain  realistic expectations. We are not gambling; we are investing. 
+
+The market does not only go up. It feels like that sometimes when we’re on a roll but that doesn’t continue forever.  That’s impossible. If it was that easy the whole world would be millionaires. The smart money gets rich slow and steady. Week after week and month after month.
+
+-
+-
+Trading strategies!
+
+Trailing Stop 
+
+It is called a “trailing stop-loss order”.  This is a valuable strategy to utilize when our stock picks increase in value. 
+ 
+You’re all familiar with a standard “stop-loss order” in which you pre-set an automatic sell number if a stock dips to that certain number.  But what if a stocks rises?  How do you lock in a guaranteed positive return while still allowing for potential continued upward profit? One method is the “80/20” rule that we used successfully numerous times already (see below for more details). 
+
+Another method is the “trailing stop-loss order”.   Let’s say you buy a recommended stock at $10.00.  We may tell you the stop-loss is $9.00 (which is 10%).   But what if the stock goes up?  We may now also advise a 10% trailing stop-loss order.  That means your brokerage account will permit the stock to continue to rise but sell it in the future only if it ever dips more than 10% from that current price. 
+
+So if that $10.00 stock reaches let’s say $13.00 it will automatically sell if the stock then goes below $11.70. In this scenario you are guaranteeing yourself a 17% increase ($10.00 to $11.70) while at the same time letting the stock continue to ride if it hits $15.00 and keeps going up or at least never dips to below $11.70. If the stock keeps rising to $20.00 for example it will only be sold if it goes below $18.00 (10% loss) and you will have locked in 80% profit ($10.00 to $18.00). 
+
+Sometimes we may advise a 10% trailing stop-loss order, other times it could be 15% or 20% or some other percentage. It depends on the specific stock. Main benefit is it secures profits. 
+
+It is a prudent investment strategy that the top (and most expensive) stock advisors utilize it at the major investment firms.  There is no reason why our family should not be using it too.  
+
+Our job is not only find winning stocks but also to share time proven investment techniques.
+
+-
+-
+80/20 Strategy 
+
+The 80/20 strategy is as follows:
+ 
+Let’s say we recommended you buy a stock at $100/share, and set the take profit at $110. The stock hits $110.00 (10% profit).  If you are happy with the 10% (and nothing is wrong with a nice 10% profit especially when the banks are paying only 1% interest for a whole year of your money) then take your profit and congratulations."""
+
+    rules2 = """However,  we recommend that you consider the 80/20 stop/loss play.  In that case, you sell 80% of it now.  
+
+Example of 80/20 Sell:
+
+So you bought one share at $100
+It went up 10% 
+You now have $110
+You sell 80% of that ($88)
+So you now have $88 back in cash and $22 in your portfolio 
+You made 10% on that first $80 ($88 that you’re actually taking now) and 10% on that other $20 ($22 but it’s still in the stock)
+
+This system allows for the final 20% ($22) to either grow more if the stock skyrockets or if it falls a little bit you get ready to sell it. 
+If the stock continues to skyrocket you can take it out whenever you see fit but if the stock drops by 5% we recommend that you sell it and lock in a guaranteed overall profit on the stock deal.  
+
+So the 80/20 rule allows for some possibly big time gains but also guarantees a profit even though less profit than if you sold all 100% at $110.  
+ 
+Everybody’s profit margin satisfaction and risk comfort level is different so there cannot be a one size fits all plan.  If you’re conservative take your profit and run.  If you’re more aggressive then play it out with the 20% and swing for the fences."""
+
+    return [rules, rules2]
+
+
 def calendar(update: Update, context: CallbackContext):
     bot.send_chat_action(chat_id=update.message.chat.id, action="typing")
     calendar, step = DetailedTelegramCalendar().build()
@@ -139,36 +208,12 @@ def button(update: Update, context: CallbackContext):
         try:
             bot.send_message(
                 chat_id=chat_id,
-                text="""🔔 TMS RULES\n\nMoving forward if we put either of these symbols 🚀✅ after saying <b>SELL</b> with a picture of the stock it means we are <i>selling</i> the stock! 
-
-Sorry for all the confusion on our end! 
-
-Again, either the rocket (🚀)
-Or the check mark (✅)
-After Saying SELL
-
-A signal will always have an alert emoji followed by TMS Signal 
- 🚨 <b>TMS Signal</b> 🚨
-
-We are following the last hours very closely. Make sure to stay alert.
-
-____________________________________________
-
-🚨 FOR NEW MEMBERS ONLY! 🚨 
-
-All new members send your Instagram username to @trustmystocks via telegram! Just click here 👉 @trustmystocks 👈
-<u>(Failure to do so will lead to removal from VIP Chat)</u>
-
-If you have done so already then thank you for cooperating . 🙏🙏
-
-If you are an old member and have not sent your Instagram username you will be removed by end of today. Please follow the instructions and message @trustmystocks
-
-Don’t forget to follow our Twitter  @trustmystocks as we provide constant updates. 
-(every follow helps)
-
-____________________________________________
-
-You should always be allocating 1 unit for trades unless told otherwise. 1 unit should comprise 5% of your total stock investment bankroll (i.e. if you have $1000 in your bankroll you should only be trading $50 per stock signal). You must also be patient.  Other advisers may be very aggressive in taking your money and pumping out stock picks left and right. However once you are broke they forget about you and move on to their next customer.  Our clients should be looking at their stock investments as a way of life not a get rich overnight scheme.""",
+                text=rules()[0],
+                parse_mode=ParseMode.HTML,
+            )
+            bot.send_message(
+                chat_id=chat_id,
+                text=rules()[1],
                 parse_mode=ParseMode.HTML,
             )
         except TelegramError as e:
