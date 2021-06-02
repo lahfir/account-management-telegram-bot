@@ -58,6 +58,7 @@ def cal(update: Update, context: CallbackContext):
             reply_markup=key,
         )
     elif result:
+        print(type(result))
         bot.edit_message_text(
             f"You selected {result}",
             update._effective_message.chat.id,
@@ -363,7 +364,7 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                     if x["approved"] == "N":
                         bot.send_message(
                             chat_id=chat_id,
-                            text="You aren't approved yet, Don't worry I will intimate the admin to approve you ASAP. Once approved, you'll have access to Signal Search ☺",
+                            text="You aren't approved yet, Don't worry we'll approve you ASAP. Once approved, you'll have access to Signal Search ☺",
                         )
         except Exception as e:
             print(e)
@@ -514,7 +515,7 @@ def packages(update: Update, context: CallbackContext):
         reply_markup = InlineKeyboardMarkup(keyboard)
         bot.send_animation(
             chat_id,
-            caption="""🎁 TMS PACKAGES
+            caption="""🎁 List of packages available with TMS
 
 These are the prices for the <b>VIP Chat</b>
 <b>
@@ -587,7 +588,7 @@ def start(update: Update, context: CallbackContext):
     try:
         results = collection.insert_one(model)
     except DuplicateKeyError as dke:
-        print(dke)
+        print("Already registered")
 
     try:
         keyboard = [
@@ -709,7 +710,7 @@ def help(update: Update, context: CallbackContext):
         reply_markup = InlineKeyboardMarkup(keyboard)
         bot.send_message(
             chat_id=chat_id,
-            text="Hello @{} 😊\n\nHow can I help you?".format(
+            text="Hello @{} 😊\n\nHow can We help you?".format(
                 str([username if username else first_name or last_name][0]) + " "
             ),
             reply_markup=reply_markup,
@@ -818,7 +819,7 @@ def handle_message(update: Update, context: CallbackContext):
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
             update._effective_message.reply_text(
-                text="Hello How can I help you?\n",
+                text="Hello How can We help you?\n",
                 reply_markup=reply_markup,
             )
         except Exception as e:
@@ -861,7 +862,7 @@ def handle_message(update: Update, context: CallbackContext):
             reply_markup = InlineKeyboardMarkup(keyboard)
             update._effective_message.reply_animation(
                 animation="https://media.giphy.com/media/PRVDslxfTmwXkLinrk/giphy.gif",
-                caption="Hello 😊\n\nI'm TMS's JARVIS 🤖\n\nHow can I help you?",
+                caption="Hello 😊\n\nI'm TMS's JARVIS 🤖\n\nHow can We help you?",
                 reply_markup=reply_markup,
             )
 
@@ -977,6 +978,8 @@ def dojhandler(update: Update, _: CallbackContext) -> int:
 
 
 def calendardojhandler(update: Update, context: CallbackContext, result) -> int:
+    global memberDoj
+    memberDoj = result
     keyboard = [
         [
             InlineKeyboardButton("✅Yes", callback_data="doj-y"),
@@ -1016,7 +1019,7 @@ def databaseentry():
     )
     bot.send_message(
         chat_id=memberChatId,
-        text="You can access me using the following commands\n\n1. /help - I'll show all the available options\n2. /me - I'll show your TMS Profile\n3. /packages - I'll show the list of packages available in TMS",
+        text="You can access our team by using the following commands.\n\n1. /help - We'll show all the available options\n2. /me - We'll show your TMS Profile\n3. /packages - We'll show the list of packages available in TMS",
     )
 
 
@@ -1094,7 +1097,7 @@ def packageselector(update: Update, _: CallbackContext) -> int:
     ):
         bot.send_message(
             chat_id,
-            text="Registration Successful, You'll receive a message from the admin shortly. 😉\n\n <b>Welcome to TRUSTMYSTOCKS</b>",
+            text="Registration is successful. You will receive a message from our team shortly. 😉\n\n <b>Welcome to TRUSTMYSTOCKS</b>",
             parse_mode=ParseMode.HTML,
         )
         databaseentry()
@@ -1187,6 +1190,7 @@ def yes_no(update: Update, context: CallbackContext):
             reply_markup=key,
         )
     elif result:
+        result = result.strftime("%m-%d-%y")
         bot.edit_message_text(
             f"You selected {result}",
             update._effective_message.chat.id,
