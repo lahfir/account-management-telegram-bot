@@ -14,7 +14,6 @@ db = cluster["tms"]
 collection = db["members"]
 
 try:
-    for x in collection.find({"_id": 1243113998}):
-        print(x)
+    print(collection.find({"_id": 1243113998}))
 except DuplicateKeyError as dke:
     print(dke)

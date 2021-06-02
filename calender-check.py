@@ -31,9 +31,11 @@ def cal(update: Update, context: CallbackContext):
         )
     elif result:
         bot.edit_message_text(
-            f"You selected {result}", update._effective_message.chat.id, update._effective_message.message_id
+            f"You selected {result}",
+            update._effective_message.chat.id,
+            update._effective_message.message_id,
         )
-        print(result)
+        print(result.strftime("%m-%d-%y"))
 
 
 dispatcher.add_handler(CommandHandler("calendar", calendar))
