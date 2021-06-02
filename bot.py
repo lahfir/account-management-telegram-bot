@@ -40,6 +40,10 @@ dispatcher = updater.dispatcher
 # chat.id sends in group whit from_user.id send [private]
 
 
+def sendToIndividual(chat_id,text):
+    bot.send_message(chat_id=chat_id, text=text, parse_mode=ParseMode.HTML)
+
+
 def rules():
     rules = """🟢 TMS RULES\n\nMoving forward if we put either of these symbols 🚀✅ after saying SELL with a picture of the stock it means we are selling the stock! 
 
@@ -358,9 +362,10 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                 ]
 
                 reply_markup = InlineKeyboardMarkup(keyboard)
-                bot.send_message(
-                    text="<b>⚙ Options</b>",
+                bot.send_photo(
+                    caption="<b>\n⚙ Options\n</b>",
                     chat_id=chat_id,
+                    photo="https://cdn.iconscout.com/icon/free/png-512/apple-settings-1-493162.png",
                     reply_markup=reply_markup,
                     parse_mode=ParseMode.HTML,
                 )
@@ -390,7 +395,6 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                         )
                     ]
                 ]
-
                 reply_markup = InlineKeyboardMarkup(keyboard)
                 if x["registered"] == "Y":
                     if x["approved"] == "Y":
@@ -405,12 +409,11 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                         text="You haven't registered yet, Click on the button below to register 👇",
                         reply_markup=reply_markup,
                     )
-                elif x["registered"] == "Y":
-                    if x["approved"] == "N":
-                        bot.send_message(
-                            chat_id=chat_id,
-                            text="You aren't approved yet, Don't worry we'll approve you ASAP. Once approved, you'll have access to Signal Search ☺",
-                        )
+                else:
+                    bot.send_message(
+                        chat_id=chat_id,
+                        text="You aren't approved yet, We'll approve you ASAP. Thanks for your patience ☺",
+                    )
         except Exception as e:
             print(e)
     # elif choice == "one_m":
