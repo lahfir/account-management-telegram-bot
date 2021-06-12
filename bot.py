@@ -464,7 +464,7 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                 parse_mode=ParseMode.HTML,
             )
     except Exception as e:
-        print()
+        print(e)
 
 
 def packages(update: Update, context: CallbackContext):
@@ -929,7 +929,7 @@ def telegramhandler(update: Update, _: CallbackContext) -> int:
         parse_mode=ParseMode.HTML,
     )
 
-
+ 
 def dojhandler(update: Update, _: CallbackContext) -> int:
     user = update.message.from_user
 
