@@ -121,6 +121,16 @@ def calendar(update: Update, context: CallbackContext):
     )
 
 
+def calendar1(update: Update, context: CallbackContext):
+    bot.send_chat_action(chat_id=update._effective_message.chat.id, action="typing")
+    calendar, step = DetailedTelegramCalendar().build()
+    bot.send_message(
+        update._effective_message.chat.id,
+        f"Select {LSTEP[step]}",
+        reply_markup=calendar,
+    )
+
+
 def cal(update: Update, context: CallbackContext):
     result, key, step = DetailedTelegramCalendar().process(update.callback_query.data)
     if not result and key:
@@ -138,6 +148,7 @@ def cal(update: Update, context: CallbackContext):
             update._effective_message.message_id,
             parse_mode=ParseMode.HTML,
         )
+    return ConversationHandler.END
 
 
 def button(update: Update, context: CallbackContext):
@@ -398,18 +409,20 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                 if x["registered"] == "Y":
                     if x["approved"] == "Y":
                         keyboard = [
-                            [KeyboardButton("/today's"), KeyboardButton("/calendar")]
+                            [
+                                InlineKeyboardButton("Today", callback_data="today"),
+                                InlineKeyboardButton(
+                                    "Calendar", callback_data="calendar"
+                                ),
+                            ]
                         ]
-                        reply_markup = ReplyKeyboardMarkup(
-                            keyboard, one_time_keyboard=True
-                        )
+                        reply_markup = InlineKeyboardMarkup(keyboard)
                         bot.send_message(
                             chat_id=chat_id,
-                            text="Please select a date to see the signals. Select /today to see today's signal or select /calendar to see the signal on that particular date",
+                            text="Please select a date to see the signals. Select Today to see today's signal or select Calendar to see the signal on that particular date",
                             parse_mode=ParseMode.HTML,
                             reply_markup=reply_markup,
                         )
-                        return SIGNAL
                 elif x["registered"] == "N":
                     bot.send_message(
                         chat_id=chat_id,
@@ -423,6 +436,35 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                     )
         except Exception as e:
             print(e)
+    elif choice == "today":
+        bot.send_message(
+            chat_id=chat_id,
+            text=f"🚨 <b>TMS SIGNAL</b> 🚨\n\nDate: {datetime.now().strftime('%m-%d-%Y')}\n\nTicker: \n\nCurrent Price: \n\nDirection: \n\nOptional STOP @ \n\nTake Profit @",
+            parse_mode=ParseMode.HTML,
+        )
+    elif choice == "calendar":
+        calendar1(update, context)
+    try:
+        result, key, step = DetailedTelegramCalendar().process(
+            update.callback_query.data
+        )
+        if not result and key:
+            bot.edit_message_text(
+                f"Select {LSTEP[step]}",
+                update._effective_message.chat.id,
+                update._effective_message.message_id,
+                reply_markup=key,
+            )
+        elif result:
+            result = result.strftime("%m-%d-%y")
+            bot.edit_message_text(
+                f"🚨 <b>TMS SIGNAL</b> 🚨\n\nDate: {result}\n\nTicker: \n\nCurrent Price: \n\nDirection: \n\nOptional STOP @ \n\nTake Profit @",
+                update._effective_message.chat.id,
+                update._effective_message.message_id,
+                parse_mode=ParseMode.HTML,
+            )
+    except Exception as e:
+        print()
 
 
 def packages(update: Update, context: CallbackContext):
@@ -819,7 +861,7 @@ def handle_message(update: Update, context: CallbackContext):
                 )
 
 
-NAME, INSTAGRAM, PACKAGE, DOJ, TELEGRAM, SIGNAL = range(6)
+NAME, INSTAGRAM, PACKAGE, DOJ, TELEGRAM = range(5)
 
 (
     memberName,
@@ -1141,6 +1183,7 @@ def todaysignal(update: Update, _: CallbackContext) -> int:
         f"🚨 <b>TMS SIGNAL</b> 🚨\n\nDate: {datetime.now().strftime('%m-%d-%Y')}\n\nTicker: \n\nCurrent Price: \n\nDirection: \n\nOptional STOP @ \n\nTake Profit @",
         parse_mode=ParseMode.HTML,
     )
+    return ConversationHandler.END
 
 
 conv_handler = ConversationHandler(
@@ -1164,24 +1207,12 @@ conv_handler = ConversationHandler(
     },
     fallbacks=[CommandHandler("cancel", cancel)],
 )
-conv_handler2 = ConversationHandler(
-    entry_points=[CallbackQueryHandler(button)],
-    states={
-        SIGNAL: [
-            CommandHandler("today's", todaysignal),
-            CommandHandler("calendar", calendar),
-            CallbackQueryHandler(cal),
-        ]
-    },
-    fallbacks=[CommandHandler("cancel", cancel)],
-)
 
 dispatcher.add_handler(CommandHandler("me", about_member))
 dispatcher.add_handler(CommandHandler("start", start))
 dispatcher.add_handler(CommandHandler("packages", packages))
 dispatcher.add_handler(CommandHandler("help", help))
 dispatcher.add_handler(conv_handler)
-dispatcher.add_handler(conv_handler2)
 dispatcher.add_handler(CallbackQueryHandler(button))
 dispatcher.add_handler(MessageHandler(Filters.text, handle_message))
 
