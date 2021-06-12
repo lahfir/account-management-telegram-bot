@@ -131,13 +131,13 @@ def cal(update: Update, context: CallbackContext):
             reply_markup=key,
         )
     elif result:
-        print(type(result))
+        result = result.strftime("%m-%d-%y")
         bot.edit_message_text(
-            f"You selected {result}",
+            f"🚨 <b>TMS SIGNAL</b> 🚨\n\nDate: {result}\n\nTicker: \n\nCurrent Price: \n\nDirection: \n\nOptional STOP @ \n\nTake Profit @",
             update._effective_message.chat.id,
             update._effective_message.message_id,
+            parse_mode=ParseMode.HTML,
         )
-        return result
 
 
 def button(update: Update, context: CallbackContext):
@@ -397,11 +397,19 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                 reply_markup = InlineKeyboardMarkup(keyboard)
                 if x["registered"] == "Y":
                     if x["approved"] == "Y":
+                        keyboard = [
+                            [KeyboardButton("/today's"), KeyboardButton("/calendar")]
+                        ]
+                        reply_markup = ReplyKeyboardMarkup(
+                            keyboard, one_time_keyboard=True
+                        )
                         bot.send_message(
                             chat_id=chat_id,
-                            text="Signal Access Coming Soon. Please wait for some day ☺",
+                            text="Please select a date to see the signals. Select /today to see today's signal or select /calendar to see the signal on that particular date",
                             parse_mode=ParseMode.HTML,
+                            reply_markup=reply_markup,
                         )
+                        return SIGNAL
                 elif x["registered"] == "N":
                     bot.send_message(
                         chat_id=chat_id,
@@ -415,134 +423,6 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                     )
         except Exception as e:
             print(e)
-    # elif choice == "one_m":
-    #     try:
-    #         bot.send_message(
-    #             chat_id=chat_id,
-    #             text="Thank you for choosing the package. We've sent your choice to the admin and he'll be getting back to you within today. Cheers!!! 🍴",
-    #         )
-    #         bot.send_message(
-    #             chat_id=chat_id,
-    #             text="Package Selection Alert 🦺\n\nUsername : {}\n\nSelected Package : 1 Month - $149".format(
-    #                 username
-    #             ),
-    #         )
-    #     except TelegramError as e:
-    #         print(e)
-    #         if e.message == "Forbidden: bot was blocked by the user":
-    #             keyboard = [
-    #                 [
-    #                     InlineKeyboardButton(
-    #                         "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
-    #                     ),
-    #                 ]
-    #             ]
-
-    #             reply_markup = InlineKeyboardMarkup(keyboard)
-    #             update._effective_message.reply_text(
-    #                 text="Uh! You might have blocked or have not Started JARVIS\n\nSTART him by clicking the button below 😊",
-    #                 reply_markup=reply_markup,
-    #             )
-    #         else:
-    #             update._effective_message.reply_text(
-    #                 text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
-    #             )
-    # elif choice == "three_m":
-    #     try:
-    #         bot.send_message(
-    #             chat_id=chat_id,
-    #             text="Thank you for choosing the package. We've sent your choice to the admin and he'll be getting back to you within today. Cheers!!! 🍴",
-    #         )
-    #         bot.send_message(
-    #             chat_id=chat_id,
-    #             text="Package Selection Alert 🦺\n\nUsername : {}\n\nSelected Package : 3 Months - $299".format(
-    #                 username
-    #             ),
-    #         )
-    #     except TelegramError as e:
-    #         print(e)
-    #         if e.message == "Forbidden: bot was blocked by the user":
-    #             keyboard = [
-    #                 [
-    #                     InlineKeyboardButton(
-    #                         "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
-    #                     ),
-    #                 ]
-    #             ]
-
-    #             reply_markup = InlineKeyboardMarkup(keyboard)
-    #             update._effective_message.reply_text(
-    #                 text="Uh! You might have blocked or have not Started JARVIS\n\nSTART him by clicking the button below 😊",
-    #                 reply_markup=reply_markup,
-    #             )
-    #         else:
-    #             update._effective_message.reply_text(
-    #                 text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
-    #             )
-    # elif choice == "six_m":
-    #     try:
-    #         bot.send_message(
-    #             chat_id=chat_id,
-    #             text="Thank you for choosing the package. We've sent your choice to the admin and he'll be getting back to you within today. Cheers!!! 🍴",
-    #         )
-    #         bot.send_message(
-    #             chat_id=chat_id,
-    #             text="Package Selection Alert 🦺\n\nUsername : {}\n\nSelected Package : 6 Months - $499".format(
-    #                 username
-    #             ),
-    #         )
-    #     except TelegramError as e:
-    #         print(e)
-    #         if e.message == "Forbidden: bot was blocked by the user":
-    #             keyboard = [
-    #                 [
-    #                     InlineKeyboardButton(
-    #                         "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
-    #                     ),
-    #                 ]
-    #             ]
-
-    #             reply_markup = InlineKeyboardMarkup(keyboard)
-    #             update._effective_message.reply_text(
-    #                 text="Uh! You might have blocked or have not Started JARVIS\n\nSTART him by clicking the button below 😊",
-    #                 reply_markup=reply_markup,
-    #             )
-    #         else:
-    #             update._effective_message.reply_text(
-    #                 text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
-    #             )
-    # elif choice == "one_y":
-    #     try:
-    #         bot.send_message(
-    #             chat_id=chat_id,
-    #             text="Thank you for choosing the package. We've sent your choice to the admin and he'll be getting back to you within today. Cheers!!! 🍴",
-    #         )
-    #         bot.send_message(
-    #             chat_id=chat_id,
-    #             text="Package Selection Alert 🦺\n\nUsername : {}\n\nSelected Package : 1 Year - $999".format(
-    #                 username
-    #             ),
-    #         )
-    #     except TelegramError as e:
-    #         print(e)
-    #         if e.message == "Forbidden: bot was blocked by the user":
-    #             keyboard = [
-    #                 [
-    #                     InlineKeyboardButton(
-    #                         "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
-    #                     ),
-    #                 ]
-    #             ]
-
-    #             reply_markup = InlineKeyboardMarkup(keyboard)
-    #             update._effective_message.reply_text(
-    #                 text="Uh! You might have blocked or have not Started JARVIS\n\nSTART him by clicking the button below 😊",
-    #                 reply_markup=reply_markup,
-    #             )
-    #         else:
-    #             update._effective_message.reply_text(
-    #                 text="Uh! There is a technical problem with JARVIS, We'll rectify it soon.\n\nSorry For your Inconvenience"
-    #             )
 
 
 def packages(update: Update, context: CallbackContext):
@@ -939,7 +819,7 @@ def handle_message(update: Update, context: CallbackContext):
                 )
 
 
-NAME, INSTAGRAM, PACKAGE, DOJ, TELEGRAM = range(5)
+NAME, INSTAGRAM, PACKAGE, DOJ, TELEGRAM, SIGNAL = range(6)
 
 (
     memberName,
@@ -1180,7 +1060,7 @@ def yes_no(update: Update, context: CallbackContext):
         keyboard = [
             [KeyboardButton("@{}".format(update._effective_message.chat.username))]
         ]
-        reply_markup = ReplyKeyboardMarkup(keyboard)
+        reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
         bot.send_message(
             chat_id,
             text="Now verify your Telegram Username by selecting on your keyboard",
@@ -1256,6 +1136,13 @@ def cancel(update: Update, _: CallbackContext) -> int:
     return ConversationHandler.END
 
 
+def todaysignal(update: Update, _: CallbackContext) -> int:
+    update.message.reply_text(
+        f"🚨 <b>TMS SIGNAL</b> 🚨\n\nDate: {datetime.now().strftime('%m-%d-%Y')}\n\nTicker: \n\nCurrent Price: \n\nDirection: \n\nOptional STOP @ \n\nTake Profit @",
+        parse_mode=ParseMode.HTML,
+    )
+
+
 conv_handler = ConversationHandler(
     entry_points=[CallbackQueryHandler(button)],
     states={
@@ -1277,12 +1164,24 @@ conv_handler = ConversationHandler(
     },
     fallbacks=[CommandHandler("cancel", cancel)],
 )
+conv_handler2 = ConversationHandler(
+    entry_points=[CallbackQueryHandler(button)],
+    states={
+        SIGNAL: [
+            CommandHandler("today's", todaysignal),
+            CommandHandler("calendar", calendar),
+            CallbackQueryHandler(cal),
+        ]
+    },
+    fallbacks=[CommandHandler("cancel", cancel)],
+)
 
 dispatcher.add_handler(CommandHandler("me", about_member))
 dispatcher.add_handler(CommandHandler("start", start))
 dispatcher.add_handler(CommandHandler("packages", packages))
 dispatcher.add_handler(CommandHandler("help", help))
 dispatcher.add_handler(conv_handler)
+dispatcher.add_handler(conv_handler2)
 dispatcher.add_handler(CallbackQueryHandler(button))
 dispatcher.add_handler(MessageHandler(Filters.text, handle_message))
 
