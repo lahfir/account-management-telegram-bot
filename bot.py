@@ -40,7 +40,7 @@ dispatcher = updater.dispatcher
 # chat.id sends in group whit from_user.id send [private]
 
 
-def sendToIndividual(chat_id,text):
+def sendToIndividual(chat_id, text):
     bot.send_message(chat_id=chat_id, text=text, parse_mode=ParseMode.HTML)
 
 
@@ -362,10 +362,9 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                 ]
 
                 reply_markup = InlineKeyboardMarkup(keyboard)
-                bot.send_photo(
-                    caption="<b>\n⚙ Options\n</b>",
+                bot.send_message(
+                    text="<b>\n⚙ Options\n</b>",
                     chat_id=chat_id,
-                    photo="https://cdn.iconscout.com/icon/free/png-512/apple-settings-1-493162.png",
                     reply_markup=reply_markup,
                     parse_mode=ParseMode.HTML,
                 )
@@ -650,8 +649,8 @@ def start(update: Update, context: CallbackContext):
         reply_markup = InlineKeyboardMarkup(keyboard)
         bot.send_message(
             chat_id,
-            text="Hello <b>@{}</b> 😊\n\nI'm TMS's JARVIS 🤖\n\nWelcome to 𝑻𝒓𝒖𝒔𝒕𝒎𝒚𝒔𝒕𝒐𝒄𝒌'𝒔 𝑽𝑰𝑷 𝑪𝑯𝑨𝑻".format(
-                username,
+            text="Hello <b>{}</b> 😊\n\nI'm TMS's JARVIS 🤖\n\nWelcome to 𝑻𝒓𝒖𝒔𝒕𝒎𝒚𝒔𝒕𝒐𝒄𝒌'𝒔 𝑽𝑰𝑷 𝑪𝑯𝑨𝑻".format(
+                str(["@" + username if username else first_name or last_name][0])
             ),
             parse_mode=ParseMode.HTML,
             reply_markup=reply_markup,
@@ -758,8 +757,8 @@ def help(update: Update, context: CallbackContext):
         reply_markup = InlineKeyboardMarkup(keyboard)
         bot.send_message(
             chat_id=chat_id,
-            text="Hello @{} 😊\n\nHow can We help you?".format(
-                str([username if username else first_name or last_name][0]) + " "
+            text="Hello {} 😊\n\nHow can We help you?".format(
+                str(["@" + username if username else first_name or last_name][0]) + " "
             ),
             reply_markup=reply_markup,
         )
