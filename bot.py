@@ -391,6 +391,10 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                         parse_mode=ParseMode.HTML,
                     )
                 else:
+                    bot.send_message(
+                        chat_id=chat_id,
+                        text="Welcome to the registration part. You'll be asked to enter few details for the registration. You can always cancel the registration using the /cancel command.",
+                    )
                     bot.send_message(chat_id=chat_id, text="Enter your name")
                     return NAME
         except Exception as e:
@@ -929,7 +933,7 @@ def telegramhandler(update: Update, _: CallbackContext) -> int:
         parse_mode=ParseMode.HTML,
     )
 
- 
+
 def dojhandler(update: Update, _: CallbackContext) -> int:
     user = update.message.from_user
 
@@ -1068,6 +1072,7 @@ def packageselector(update: Update, _: CallbackContext) -> int:
             chat_id,
             text="Registration is successful. You will receive a message from our team shortly. 😉\n\n <b>Welcome to TRUSTMYSTOCKS</b>",
             parse_mode=ParseMode.HTML,
+            reply_markup=ReplyKeyboardRemove(),
         )
         databaseentry()
         return ConversationHandler.END
@@ -1103,12 +1108,27 @@ def yes_no(update: Update, context: CallbackContext):
             [KeyboardButton("@{}".format(update._effective_message.chat.username))]
         ]
         reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-        bot.send_message(
-            chat_id,
-            text="Now verify your Telegram Username by selecting on your keyboard",
-            reply_markup=reply_markup,
-        )
-        return TELEGRAM
+        if update._effective_message.chat.username == "None":
+            bot.send_message(
+                chat_id,
+                text="Uh, Seems like you don't have a telegram username",
+            )
+            keyboard = [[KeyboardButton("/today"), KeyboardButton("/calendar")]]
+            reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+            bot.send_message(
+                chat_id,
+                text="Now Select Date of Joining. Select /today if you've joined today or to select a date click on /calendar",
+                reply_markup=reply_markup,
+                parse_mode=ParseMode.HTML,
+            )
+            return DOJ
+        else:
+            bot.send_message(
+                chat_id,
+                text="Now verify your Telegram Username by selecting on your keyboard",
+                reply_markup=reply_markup,
+            )
+            return TELEGRAM
     elif choice == "insta-n":
         bot.send_message(
             chat_id, text="Alright, Enter your correct Instagram Handle please"
@@ -1172,7 +1192,8 @@ def cancel(update: Update, _: CallbackContext) -> int:
     """Cancels and ends the conversation."""
     user = update.message.from_user
     update.message.reply_text(
-        "Cancelled the Operation", reply_markup=ReplyKeyboardRemove()
+        "Cancelled the Operation\n\nYou aren't registered yet. You need to be registered to get access to Signals.\n\nThanks 😊",
+        reply_markup=ReplyKeyboardRemove(),
     )
 
     return ConversationHandler.END
@@ -1189,21 +1210,31 @@ def todaysignal(update: Update, _: CallbackContext) -> int:
 conv_handler = ConversationHandler(
     entry_points=[CallbackQueryHandler(button)],
     states={
-        NAME: [MessageHandler(Filters.text, namehandler), CallbackQueryHandler(yes_no)],
+        NAME: [
+            CommandHandler("cancel", cancel),
+            MessageHandler(Filters.text, namehandler),
+            CallbackQueryHandler(yes_no),
+        ],
         INSTAGRAM: [
+            CommandHandler("cancel", cancel),
             MessageHandler(Filters.text, instagramhandler),
             CallbackQueryHandler(yes_no),
         ],
         TELEGRAM: [
+            CommandHandler("cancel", cancel),
             MessageHandler(Filters.text, telegramhandler),
             CallbackQueryHandler(yes_no),
         ],
         DOJ: [
+            CommandHandler("cancel", cancel),
             CommandHandler("today", dojhandler),
             CallbackQueryHandler(yes_no),
             CommandHandler("calendar", calendar),
         ],
-        PACKAGE: [CallbackQueryHandler(packageselector)],
+        PACKAGE: [
+            CommandHandler("cancel", cancel),
+            CallbackQueryHandler(packageselector),
+        ],
     },
     fallbacks=[CommandHandler("cancel", cancel)],
 )
