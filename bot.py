@@ -423,7 +423,7 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                         reply_markup = InlineKeyboardMarkup(keyboard)
                         bot.send_message(
                             chat_id=chat_id,
-                            text="Please select a date to see the signals. Select Today to see today's signal or select Calendar to see the signal on that particular date",
+                            text="Please select a date to see the signals. Select <b>Today</b> to see today's signal or select <b>Calendar</b> to see the signal on that particular date",
                             parse_mode=ParseMode.HTML,
                             reply_markup=reply_markup,
                         )
@@ -444,13 +444,21 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
         todaysDate = datetime.now().strftime("%m-%d-%Y")
         db1 = cluster["Signals"]
         coll = db1[todaysDate]
+        data = list(coll.find())
 
-        for i in coll.find():
+        if len(data) <= 0:
             bot.send_message(
                 chat_id=chat_id,
-                text=f"🚨 <b>TMS SIGNAL</b> 🚨\n\nDate: {todaysDate}\n\nTicker: <b>{i['ticker']}</b>\n\nCurrent Price: <b>{i['currentPrice']}</b>\n\nDirection: <b>{i['direction']}</b>\n\nOptional STOP @ <b>{i['optionalStop']}</b>\n\nTake Profit @<b>{i['takeProfit']}</b>",
+                text=f"No Signals Found",
                 parse_mode=ParseMode.HTML,
             )
+        else:
+            for i in data:
+                bot.send_message(
+                    chat_id=chat_id,
+                    text=f"🚨 <b>TMS SIGNAL</b> 🚨\n\nDate: <b>{todaysDate}</b>\n\nTicker: $<b>{i['ticker'].upper()}</b>\n\nCurrent Price: <b>{i['currentPrice']}</b>\n\nDirection: <b>{i['direction']}</b>\n\nOptional STOP @ <b>{i['optionalStop']}</b>\n\nTake Profit @ <b>{i['takeProfit']}</b>",
+                    parse_mode=ParseMode.HTML,
+                )
     elif choice == "calendar":
         calendar1(update, context)
     try:
@@ -465,16 +473,24 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                 reply_markup=key,
             )
         elif result:
-            result = result.strftime("%m-%d-%y")
+            result = result.strftime("%m-%d-%Y")
+            print(result)
             db1 = cluster["Signals"]
             coll = db1[result]
-
-            for i in coll.find():
+            data = list(coll.find())
+            if len(data) <= 0:
                 bot.send_message(
                     chat_id=chat_id,
-                    text=f"🚨 <b>TMS SIGNAL</b> 🚨\n\nDate: {todaysDate}\n\nTicker: <b>{i['ticker']}</b>\n\nCurrent Price: <b>{i['currentPrice']}</b>\n\nDirection: <b>{i['direction']}</b>\n\nOptional STOP @ <b>{i['optionalStop']}</b>\n\nTake Profit @<b>{i['takeProfit']}</b>",
+                    text=f"No Signals Found",
                     parse_mode=ParseMode.HTML,
                 )
+            else:
+                for i in data:
+                    bot.send_message(
+                        chat_id=chat_id,
+                        text=f"🚨 <b>TMS SIGNAL</b> 🚨\n\nDate: <b>{result}</b>\n\nTicker: $<b>{i['ticker'].upper()}</b>\n\nCurrent Price: <b>{i['currentPrice']}</b>\n\nDirection: <b>{i['direction']}</b>\n\nOptional STOP @ <b>{i['optionalStop']}</b>\n\nTake Profit @ <b>{i['takeProfit']}</b>",
+                        parse_mode=ParseMode.HTML,
+                    )
     except Exception as e:
         print(e)
 
