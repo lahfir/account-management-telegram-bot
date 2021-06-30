@@ -441,11 +441,16 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
         except Exception as e:
             print(e)
     elif choice == "today":
-        bot.send_message(
-            chat_id=chat_id,
-            text=f"🚨 <b>TMS SIGNAL</b> 🚨\n\nDate: {datetime.now().strftime('%m-%d-%Y')}\n\nTicker: \n\nCurrent Price: \n\nDirection: \n\nOptional STOP @ \n\nTake Profit @",
-            parse_mode=ParseMode.HTML,
-        )
+        todaysDate = datetime.now().strftime("%m-%d-%Y")
+        db1 = cluster["Signals"]
+        coll = db1[todaysDate]
+
+        for i in coll.find():
+            bot.send_message(
+                chat_id=chat_id,
+                text=f"🚨 <b>TMS SIGNAL</b> 🚨\n\nDate: {todaysDate}\n\nTicker: <b>{i['ticker']}</b>\n\nCurrent Price: <b>{i['currentPrice']}</b>\n\nDirection: <b>{i['direction']}</b>\n\nOptional STOP @ <b>{i['optionalStop']}</b>\n\nTake Profit @<b>{i['takeProfit']}</b>",
+                parse_mode=ParseMode.HTML,
+            )
     elif choice == "calendar":
         calendar1(update, context)
     try:
@@ -461,12 +466,15 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
             )
         elif result:
             result = result.strftime("%m-%d-%y")
-            bot.edit_message_text(
-                f"🚨 <b>TMS SIGNAL</b> 🚨\n\nDate: {result}\n\nTicker: \n\nCurrent Price: \n\nDirection: \n\nOptional STOP @ \n\nTake Profit @",
-                update._effective_message.chat.id,
-                update._effective_message.message_id,
-                parse_mode=ParseMode.HTML,
-            )
+            db1 = cluster["Signals"]
+            coll = db1[result]
+
+            for i in coll.find():
+                bot.send_message(
+                    chat_id=chat_id,
+                    text=f"🚨 <b>TMS SIGNAL</b> 🚨\n\nDate: {todaysDate}\n\nTicker: <b>{i['ticker']}</b>\n\nCurrent Price: <b>{i['currentPrice']}</b>\n\nDirection: <b>{i['direction']}</b>\n\nOptional STOP @ <b>{i['optionalStop']}</b>\n\nTake Profit @<b>{i['takeProfit']}</b>",
+                    parse_mode=ParseMode.HTML,
+                )
     except Exception as e:
         print(e)
 
