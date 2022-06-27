@@ -10,12 +10,12 @@ from telegram.ext import *
 from telegram_bot_calendar import LSTEP, DetailedTelegramCalendar
 
 cluster = MongoClient(
-    "mongodb+srv://lahfir:mslahfir%40262001@clustertms.lkxcy.mongodb.net/test?authSource=admin&replicaSet=atlas-xqmx6k-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true"
+    "mongodb+srv://lahfir:RnDxp9OYuCheZHpl@democluster.q6wxp.mongodb.net/demo-bot?ssl=true&ssl_cert_reqs=CERT_NONE"
 )
 if cluster:
     print("Connected")
 
-db = cluster["tms"]
+db = cluster["COMPANY"]
 collection = db["members"]
 
 model = {
@@ -30,7 +30,7 @@ model = {
 }
 
 # my_id = 1243113998
-# tms = 879137704
+# COMPANY = 879137704
 
 bot = Bot("1849417198:AAHR2-o8d20OJ4sVzBMuHbcj8_ZEzHCpMZs")
 updater = Updater("1849417198:AAHR2-o8d20OJ4sVzBMuHbcj8_ZEzHCpMZs", use_context=True)
@@ -45,13 +45,13 @@ def sendToIndividual(chat_id, text):
 
 
 def rules():
-    rules = """🟢 TMS RULES\n\nMoving forward if we put either of these symbols 🚀✅ after saying SELL with a picture of the stock it means we are selling the stock! 
+    rules = """🟢 COMPANY RULES\n\nMoving forward if we put either of these symbols 🚀✅ after saying SELL with a picture of the stock it means we are selling the stock! 
 
 
 ____________________________
 
 
-Don’t forget to follow our Twitter  @trustmystocks as we provide constant updates. 
+Don't forget to follow our Twitter  @lahfir as we provide constant updates. 
 (every follow helps)
 
 ____________________________
@@ -60,9 +60,9 @@ You must be aware of Risk Management when Trading. You CANNOT get carried away o
 
 You should always allocate one unit for trades unless told otherwise. One unit should comprise 5%-8% of your total stock investment bankroll (i.e. if you have $1000 in your bankroll you should only be trading approximately $50-$80 per stock signal). We preach this often so you can invest in more signals. 
 
-You must also be patient.  Other advisers may be very aggressive in taking your money and pumping out stock picks non-stop all day. However, once you’re BROKE they forget about you and move on to new customers.  We take the long term approach because we want you as part of our family for a long time. Our clients should be looking at their stock investments as a way of life not a get rich overnight scheme. Yes some signals could go up 100% plus, but you have to maintain  realistic expectations. We are not gambling; we are investing. 
+You must also be patient.  Other advisers may be very aggressive in taking your money and pumping out stock picks non-stop all day. However, once you're BROKE they forget about you and move on to new customers.  We take the long term approach because we want you as part of our family for a long time. Our clients should be looking at their stock investments as a way of life not a get rich overnight scheme. Yes some signals could go up 100% plus, but you have to maintain  realistic expectations. We are not gambling; we are investing. 
 
-The market does not only go up. It feels like that sometimes when we’re on a roll but that doesn’t continue forever.  That’s impossible. If it was that easy the whole world would be millionaires. The smart money gets rich slow and steady. Week after week and month after month.
+The market does not only go up. It feels like that sometimes when we're on a roll but that doesn't continue forever.  That's impossible. If it was that easy the whole world would be millionaires. The smart money gets rich slow and steady. Week after week and month after month.
 
 -
 -
@@ -72,11 +72,11 @@ Trailing Stop
 
 It is called a “trailing stop-loss order”.  This is a valuable strategy to utilize when our stock picks increase in value. 
  
-You’re all familiar with a standard “stop-loss order” in which you pre-set an automatic sell number if a stock dips to that certain number.  But what if a stocks rises?  How do you lock in a guaranteed positive return while still allowing for potential continued upward profit? One method is the “80/20” rule that we used successfully numerous times already (see below for more details). 
+You're all familiar with a standard “stop-loss order” in which you pre-set an automatic sell number if a stock dips to that certain number.  But what if a stocks rises?  How do you lock in a guaranteed positive return while still allowing for potential continued upward profit? One method is the “80/20” rule that we used successfully numerous times already (see below for more details). 
 
-Another method is the “trailing stop-loss order”.   Let’s say you buy a recommended stock at $10.00.  We may tell you the stop-loss is $9.00 (which is 10%).   But what if the stock goes up?  We may now also advise a 10% trailing stop-loss order.  That means your brokerage account will permit the stock to continue to rise but sell it in the future only if it ever dips more than 10% from that current price. 
+Another method is the “trailing stop-loss order”.   Let's say you buy a recommended stock at $10.00.  We may tell you the stop-loss is $9.00 (which is 10%).   But what if the stock goes up?  We may now also advise a 10% trailing stop-loss order.  That means your brokerage account will permit the stock to continue to rise but sell it in the future only if it ever dips more than 10% from that current price. 
 
-So if that $10.00 stock reaches let’s say $13.00 it will automatically sell if the stock then goes below $11.70. In this scenario you are guaranteeing yourself a 17% increase ($10.00 to $11.70) while at the same time letting the stock continue to ride if it hits $15.00 and keeps going up or at least never dips to below $11.70. If the stock keeps rising to $20.00 for example it will only be sold if it goes below $18.00 (10% loss) and you will have locked in 80% profit ($10.00 to $18.00). 
+So if that $10.00 stock reaches let's say $13.00 it will automatically sell if the stock then goes below $11.70. In this scenario you are guaranteeing yourself a 17% increase ($10.00 to $11.70) while at the same time letting the stock continue to ride if it hits $15.00 and keeps going up or at least never dips to below $11.70. If the stock keeps rising to $20.00 for example it will only be sold if it goes below $18.00 (10% loss) and you will have locked in 80% profit ($10.00 to $18.00). 
 
 Sometimes we may advise a 10% trailing stop-loss order, other times it could be 15% or 20% or some other percentage. It depends on the specific stock. Main benefit is it secures profits. 
 
@@ -90,7 +90,7 @@ Our job is not only find winning stocks but also to share time proven investment
 
 The 80/20 strategy is as follows:
  
-Let’s say we recommended you buy a stock at $100/share, and set the take profit at $110. The stock hits $110.00 (10% profit).  If you are happy with the 10% (and nothing is wrong with a nice 10% profit especially when the banks are paying only 1% interest for a whole year of your money) then take your profit and congratulations."""
+Let's say we recommended you buy a stock at $100/share, and set the take profit at $110. The stock hits $110.00 (10% profit).  If you are happy with the 10% (and nothing is wrong with a nice 10% profit especially when the banks are paying only 1% interest for a whole year of your money) then take your profit and congratulations."""
 
     rules2 = """However,  we recommend that you consider the 80/20 stop/loss play.  In that case, you sell 80% of it now.  
 
@@ -101,14 +101,14 @@ It went up 10%
 You now have $110
 You sell 80% of that ($88)
 So you now have $88 back in cash and $22 in your portfolio 
-You made 10% on that first $80 ($88 that you’re actually taking now) and 10% on that other $20 ($22 but it’s still in the stock)
+You made 10% on that first $80 ($88 that you're actually taking now) and 10% on that other $20 ($22 but it's still in the stock)
 
 This system allows for the final 20% ($22) to either grow more if the stock skyrockets or if it falls a little bit you get ready to sell it. 
 If the stock continues to skyrocket you can take it out whenever you see fit but if the stock drops by 5% we recommend that you sell it and lock in a guaranteed overall profit on the stock deal.  
 
 So the 80/20 rule allows for some possibly big time gains but also guarantees a profit even though less profit than if you sold all 100% at $110.  
  
-Everybody’s profit margin satisfaction and risk comfort level is different so there cannot be a one size fits all plan.  If you’re conservative take your profit and run.  If you’re more aggressive then play it out with the 20% and swing for the fences."""
+Everybody's profit margin satisfaction and risk comfort level is different so there cannot be a one size fits all plan.  If you're conservative take your profit and run.  If you're more aggressive then play it out with the 20% and swing for the fences."""
 
     return [rules, rules2]
 
@@ -143,7 +143,7 @@ def cal(update: Update, context: CallbackContext):
     elif result:
         result = result.strftime("%m-%d-%y")
         bot.edit_message_text(
-            f"🚨 <b>TMS SIGNAL</b> 🚨\n\nDate: {result}\n\nTicker: \n\nCurrent Price: \n\nDirection: \n\nOptional STOP @ \n\nTake Profit @",
+            f"🚨 <b>COMPANY SIGNAL</b> 🚨\n\nDate: {result}\n\nTicker: \n\nCurrent Price: \n\nDirection: \n\nOptional STOP @ \n\nTake Profit @",
             update._effective_message.chat.id,
             update._effective_message.message_id,
             parse_mode=ParseMode.HTML,
@@ -173,7 +173,7 @@ def button(update: Update, context: CallbackContext):
                 if x["registered"] == "Y":
                     bot.send_message(
                         chat_id=chat_id,
-                        text="<i>TMS PROFILE</i>\n\n👤 Your Name: <b>{}</b>\n\n📅 Date Joined: <b>{}</b>\n\n✅ Your Instagram: <b>{}</b>\n\n💰 Your Package: <b>{}</b>\n\n\n✅ Approved: <b>{}</b>".format(
+                        text="<i>COMPANY PROFILE</i>\n\n👤 Your Name: <b>{}</b>\n\n📅 Date Joined: <b>{}</b>\n\n✅ Your Instagram: <b>{}</b>\n\n💰 Your Package: <b>{}</b>\n\n\n✅ Approved: <b>{}</b>".format(
                             x["name"],
                             x["doj"],
                             x["instausername"],
@@ -205,7 +205,7 @@ def button(update: Update, context: CallbackContext):
                 keyboard = [
                     [
                         InlineKeyboardButton(
-                            "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
+                            "Start COMPANY-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
                         ),
                     ]
                 ]
@@ -237,7 +237,7 @@ def button(update: Update, context: CallbackContext):
                 keyboard = [
                     [
                         InlineKeyboardButton(
-                            "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
+                            "Start COMPANY-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
                         ),
                     ]
                 ]
@@ -263,7 +263,7 @@ def button(update: Update, context: CallbackContext):
             reply_markup = InlineKeyboardMarkup(keyboard)
             bot.send_animation(
                 chat_id,
-                caption="""🎁 TMS PACKAGES
+                caption="""🎁 COMPANY PACKAGES
 
 These are the prices for the <b>VIP Chat</b>
 <b>
@@ -280,7 +280,7 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
             )
         #             bot.send_message(
         #                 chat_id,
-        #                 text="""🎁 TMS PACKAGES
+        #                 text="""🎁 COMPANY PACKAGES
 
         # These are the prices for the <b>VIP Chat</b>
         # <b>
@@ -300,7 +300,7 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                 keyboard = [
                     [
                         InlineKeyboardButton(
-                            "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
+                            "Start COMPANY-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
                         ),
                     ]
                 ]
@@ -322,15 +322,15 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
 
 ⚠ DISCLAIMER!
 
-• By joining and/or participating in the TrustMyStocks chat room and/or VIP signal chat you hereby understand, consent and agree that you are solely responsible for any and all investment related decisions, strategies and actions that you choose to execute.  TrustMyStocks is not an investment, legal, tax, or financial advisor or a broker-dealer.  We are not licensed or registered stock brokers or investment advisors nor do we in any manner hold ourselves out as investment advisors or securities experts.  Alerts, texts, messages and any other forms  of communication are strictly for entertainment, educational and informational purposes and we are not responsible for any gains or losses incurred as a result of you trading in securities.  You are responsible for your own independent research and due diligence. We highly recommend you consult with licensed experts and always remember there are many inherent risks involved in trading, swing trading, and any buying / selling of securities.  We are not liable for the accuracy or reliability of any information that is provided.  We are offering our personal opinions and nothing more. We are not required to refrain or partake in any buying or selling of any stock, security, commodity or fund that is in any manner discussed on any TrustMyStocks platform.  We will refrain or invest in any given stock, security, commodity or fund at our own personal discretion and without any prior or subsequent notice to you at any point in time or on any platform. 
+• By joining and/or participating in the Company chat room and/or VIP signal chat you hereby understand, consent and agree that you are solely responsible for any and all investment related decisions, strategies and actions that you choose to execute.  Company is not an investment, legal, tax, or financial advisor or a broker-dealer.  We are not licensed or registered stock brokers or investment advisors nor do we in any manner hold ourselves out as investment advisors or securities experts.  Alerts, texts, messages and any other forms  of communication are strictly for entertainment, educational and informational purposes and we are not responsible for any gains or losses incurred as a result of you trading in securities.  You are responsible for your own independent research and due diligence. We highly recommend you consult with licensed experts and always remember there are many inherent risks involved in trading, swing trading, and any buying / selling of securities.  We are not liable for the accuracy or reliability of any information that is provided.  We are offering our personal opinions and nothing more. We are not required to refrain or partake in any buying or selling of any stock, security, commodity or fund that is in any manner discussed on any Company platform.  We will refrain or invest in any given stock, security, commodity or fund at our own personal discretion and without any prior or subsequent notice to you at any point in time or on any platform. 
                 
-• By accepting these “terms and conditions” you hereby disclaim, release and waive any and all liability, claims, losses or damages directly or indirectly related to any item posted on any TrustMyStocks platform including but not limited to the chat room and VIP signal chat and no fiduciary relationship or duty exists between you and TrustMyStocks.  If you do not fully agree and consent to these “terms and conditions” then do not join or in any manner participate in the chat room or VIP signal chat. 
+• By accepting these “terms and conditions” you hereby disclaim, release and waive any and all liability, claims, losses or damages directly or indirectly related to any item posted on any Company platform including but not limited to the chat room and VIP signal chat and no fiduciary relationship or duty exists between you and Company.  If you do not fully agree and consent to these “terms and conditions” then do not join or in any manner participate in the chat room or VIP signal chat. 
 
 • By paying the fee to join the VIP signal chat you are acknowledging that you have read the disclaimer and consent to its terms and conditions.
 
-• Please provide Instagram username to @trustmystocks 🚀🚀
+• Please provide Instagram username to @lahfir 🚀🚀
 
-• If you don’t send us your Instagram username  for confirmation you will be REMOVED!
+• If you don't send us your Instagram username  for confirmation you will be REMOVED!
 
 • If you did already then you are good!""",
             )
@@ -340,7 +340,7 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                 keyboard = [
                     [
                         InlineKeyboardButton(
-                            "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
+                            "Start COMPANY-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
                         ),
                     ]
                 ]
@@ -387,7 +387,7 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                 if x["registered"] == "Y":
                     bot.send_message(
                         chat_id=chat_id,
-                        text="You have already registered. You can access your profile with /me command.\n\n If you want to edit your profile or extend the package, contact @trustmystocks.\n\nOption for extending the package through bot is <b>Coming Soon....</b> 💥",
+                        text="You have already registered. You can access your profile with /me command.\n\n If you want to edit your profile or extend the package, contact @lahfir.\n\nOption for extending the package through bot is <b>Coming Soon....</b> 💥",
                         parse_mode=ParseMode.HTML,
                     )
                 else:
@@ -399,17 +399,9 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                     return NAME
         except Exception as e:
             print(e)
-    elif choice == "signal-search":
+    elif choice == "signal-search":  # signal search
         try:
             for x in collection.find({"_id": chat_id}):
-                keyboard = [
-                    [
-                        InlineKeyboardButton(
-                            "👤New User Registration", callback_data="new-reg"
-                        )
-                    ]
-                ]
-                reply_markup = InlineKeyboardMarkup(keyboard)
                 if x["registered"] == "Y":
                     if x["approved"] == "Y":
                         keyboard = [
@@ -427,16 +419,24 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                             parse_mode=ParseMode.HTML,
                             reply_markup=reply_markup,
                         )
+                    else:
+                        bot.send_message(
+                            chat_id=chat_id,
+                            text="You aren't approved yet, We'll approve you ASAP. Thanks for your patience ☺",
+                        )
                 elif x["registered"] == "N":
+                    keyboard = [
+                        [
+                            InlineKeyboardButton(
+                                "👤New User Registration", callback_data="new-reg"
+                            )
+                        ]
+                    ]
+                    reply_markup = InlineKeyboardMarkup(keyboard)
                     bot.send_message(
                         chat_id=chat_id,
                         text="You haven't registered yet, Click on the button below to register 👇",
                         reply_markup=reply_markup,
-                    )
-                else:
-                    bot.send_message(
-                        chat_id=chat_id,
-                        text="You aren't approved yet, We'll approve you ASAP. Thanks for your patience ☺",
                     )
         except Exception as e:
             print(e)
@@ -456,7 +456,7 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
             for i in data:
                 bot.send_message(
                     chat_id=chat_id,
-                    text=f"🚨 <b>TMS SIGNAL</b> 🚨\n\nDate: <b>{todaysDate}</b>\n\nTicker: $<b>{i['ticker'].upper()}</b>\n\nCurrent Price: <b>{i['currentPrice']}</b>\n\nDirection: <b>{i['direction']}</b>\n\nOptional STOP @ <b>{i['optionalStop']}</b>\n\nTake Profit @ <b>{i['takeProfit']}</b>",
+                    text=f"🚨 <b>COMPANY SIGNAL</b> 🚨\n\nDate: <b>{todaysDate}</b>\n\nTicker: $<b>{i['ticker'].upper()}</b>\n\nCurrent Price: <b>{i['currentPrice']}</b>\n\nDirection: <b>{i['direction']}</b>\n\nOptional STOP @ <b>{i['optionalStop']}</b>\n\nTake Profit @ <b>{i['takeProfit']}</b>",
                     parse_mode=ParseMode.HTML,
                 )
     elif choice == "calendar":
@@ -488,7 +488,7 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
                 for i in data:
                     bot.send_message(
                         chat_id=chat_id,
-                        text=f"🚨 <b>TMS SIGNAL</b> 🚨\n\nDate: <b>{result}</b>\n\nTicker: $<b>{i['ticker'].upper()}</b>\n\nCurrent Price: <b>{i['currentPrice']}</b>\n\nDirection: <b>{i['direction']}</b>\n\nOptional STOP @ <b>{i['optionalStop']}</b>\n\nTake Profit @ <b>{i['takeProfit']}</b>",
+                        text=f"🚨 <b>COMPANY SIGNAL</b> 🚨\n\nDate: <b>{result}</b>\n\nTicker: $<b>{i['ticker'].upper()}</b>\n\nCurrent Price: <b>{i['currentPrice']}</b>\n\nDirection: <b>{i['direction']}</b>\n\nOptional STOP @ <b>{i['optionalStop']}</b>\n\nTake Profit @ <b>{i['takeProfit']}</b>",
                         parse_mode=ParseMode.HTML,
                     )
     except Exception as e:
@@ -512,7 +512,7 @@ def packages(update: Update, context: CallbackContext):
         reply_markup = InlineKeyboardMarkup(keyboard)
         bot.send_animation(
             chat_id,
-            caption="""🎁 List of packages available with TMS
+            caption="""🎁 List of packages available with COMPANY
 
 These are the prices for the <b>VIP Chat</b>
 <b>
@@ -529,7 +529,7 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
         )
         #             bot.send_message(
         #                 chat_id,
-        #                 text="""🎁 TMS PACKAGES
+        #                 text="""🎁 COMPANY PACKAGES
 
         # These are the prices for the <b>VIP Chat</b>
         # <b>
@@ -549,7 +549,7 @@ GET OFF THE SIDELINES AND RIDE OUR SIGNALS EVERY DAY 🚂🤝""",
             keyboard = [
                 [
                     InlineKeyboardButton(
-                        "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
+                        "Start COMPANY-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
                     ),
                 ]
             ]
@@ -599,7 +599,7 @@ def start(update: Update, context: CallbackContext):
         reply_markup = InlineKeyboardMarkup(keyboard)
         bot.send_message(
             chat_id,
-            text="Hello <b>{}</b> 😊\n\nI'm TMS's JARVIS 🤖\n\nWelcome to 𝑻𝒓𝒖𝒔𝒕𝒎𝒚𝒔𝒕𝒐𝒄𝒌'𝒔 𝑽𝑰𝑷 𝑪𝑯𝑨𝑻".format(
+            text="Hello <b>{}</b> 😊\n\nI'm COMPANY's JARVIS 🤖\n\nWelcome to 𝑻𝒓𝒖𝒔𝒕𝒎𝒚𝒔𝒕𝒐𝒄𝒌'𝒔 𝑽𝑰𝑷 𝑪𝑯𝑨𝑻".format(
                 str(["@" + username if username else first_name or last_name][0])
             ),
             parse_mode=ParseMode.HTML,
@@ -611,7 +611,7 @@ def start(update: Update, context: CallbackContext):
             keyboard = [
                 [
                     InlineKeyboardButton(
-                        "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
+                        "Start COMPANY-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
                     ),
                 ]
             ]
@@ -641,7 +641,7 @@ def about_member(update: Update, context: CallbackContext):
             if x["registered"] == "Y":
                 bot.send_message(
                     chat_id=chat_id,
-                    text="<i>TMS PROFILE</i>\n\n👤 Your Name: <b>{}</b>\n\n📅 Date Joined: <b>{}</b>\n\n✅ Your Instagram: <b>{}</b>\n\n💰 Your Package: <b>{}</b>\n\n\n✅ Approved: <b>{}</b>".format(
+                    text="<i>COMPANY PROFILE</i>\n\n👤 Your Name: <b>{}</b>\n\n📅 Date Joined: <b>{}</b>\n\n✅ Your Instagram: <b>{}</b>\n\n💰 Your Package: <b>{}</b>\n\n\n✅ Approved: <b>{}</b>".format(
                         x["name"],
                         x["doj"],
                         x["instausername"],
@@ -672,7 +672,7 @@ def about_member(update: Update, context: CallbackContext):
             keyboard = [
                 [
                     InlineKeyboardButton(
-                        "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
+                        "Start COMPANY-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
                     ),
                 ]
             ]
@@ -718,7 +718,7 @@ def help(update: Update, context: CallbackContext):
             keyboard = [
                 [
                     InlineKeyboardButton(
-                        "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
+                        "Start COMPANY-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
                     ),
                 ]
             ]
@@ -746,7 +746,7 @@ def welcome_new_member(update: Update, context: CallbackContext):
             keyboard = [
                 [
                     InlineKeyboardButton(
-                        "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
+                        "Start COMPANY-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
                     ),
                 ]
             ]
@@ -756,14 +756,14 @@ def welcome_new_member(update: Update, context: CallbackContext):
             bot.send_photo(
                 chat_id=chat_id,
                 photo="https://media.istockphoto.com/vectors/colorful-typography-banner-vector-id1172141868?k=6&m=1172141868&s=612x612&w=0&h=BxvixysXTEaDyu0Xin3ktuBWkV8a4SOm7isACzqyOCw=",
-                caption="Welcome @{} 😊\n\nI'm TMS's JARVIS 🤖\n\nWelcome to 𝑻𝒓𝒖𝒔𝒕𝒎𝒚𝒔𝒕𝒐𝒄𝒌'𝒔 𝑽𝑰𝑷 𝑪𝑯𝑨𝑻 📈\n\nYou can access me by Cliking on the button below 😊".format(
+                caption="Welcome @{} 😊\n\nI'm COMPANY's JARVIS 🤖\n\nWelcome to 𝑻𝒓𝒖𝒔𝒕𝒎𝒚𝒔𝒕𝒐𝒄𝒌'𝒔 𝑽𝑰𝑷 𝑪𝑯𝑨𝑻 📈\n\nYou can access me by Cliking on the button below 😊".format(
                     str([username if username else first_name or last_name][0]) + " "
                 ),
                 reply_markup=reply_markup,
             )
             # bot.send_message(
             #     chat_id=chat_id,
-            #     text="Welcome @{} 😊\n\nI'm TMS's JARVIS 🤖\n\nWelcome to 𝑻𝒓𝒖𝒔𝒕𝒎𝒚𝒔𝒕𝒐𝒄𝒌'𝒔 𝑽𝑰𝑷 𝑪𝑯𝑨𝑻 📈\n\nYou can access me by Cliking on the button below 😊".format(
+            #     text="Welcome @{} 😊\n\nI'm COMPANY's JARVIS 🤖\n\nWelcome to 𝑻𝒓𝒖𝒔𝒕𝒎𝒚𝒔𝒕𝒐𝒄𝒌'𝒔 𝑽𝑰𝑷 𝑪𝑯𝑨𝑻 📈\n\nYou can access me by Cliking on the button below 😊".format(
             #         str([username if username else first_name or last_name][0]) + " "
             #     ),
             #     reply_markup=reply_markup,
@@ -774,7 +774,7 @@ def welcome_new_member(update: Update, context: CallbackContext):
                 keyboard = [
                     [
                         InlineKeyboardButton(
-                            "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
+                            "Start COMPANY-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
                         ),
                     ]
                 ]
@@ -825,7 +825,7 @@ def handle_message(update: Update, context: CallbackContext):
                 keyboard = [
                     [
                         InlineKeyboardButton(
-                            "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
+                            "Start COMPANY-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
                         ),
                     ]
                 ]
@@ -859,12 +859,12 @@ def handle_message(update: Update, context: CallbackContext):
             reply_markup = InlineKeyboardMarkup(keyboard)
             update._effective_message.reply_animation(
                 animation="https://media.giphy.com/media/PRVDslxfTmwXkLinrk/giphy.gif",
-                caption="Hello 😊\n\nI'm TMS's JARVIS 🤖\n\nHow can We help you?",
+                caption="Hello 😊\n\nI'm COMPANY's JARVIS 🤖\n\nHow can We help you?",
                 reply_markup=reply_markup,
             )
 
             # update._effective_message.reply_text(
-            #     text="Hello 😊\n\nI'm TMS's JARVIS 🤖\n\nHow can I help you?",
+            #     text="Hello 😊\n\nI'm COMPANY's JARVIS 🤖\n\nHow can I help you?",
             #     reply_markup=reply_markup,
             # )
         except Exception as e:
@@ -873,7 +873,7 @@ def handle_message(update: Update, context: CallbackContext):
                 keyboard = [
                     [
                         InlineKeyboardButton(
-                            "Start TMS-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
+                            "Start COMPANY-JARVIS 🚀", url="https://t.me/TMSVIP_BOT"
                         ),
                     ]
                 ]
@@ -1016,7 +1016,7 @@ def databaseentry():
     )
     bot.send_message(
         chat_id=memberChatId,
-        text="You can access our team by using the following commands.\n\n1. /help - We'll show all the available options\n2. /me - We'll show your TMS Profile\n3. /packages - We'll show the list of packages available in TMS",
+        text="You can access our team by using the following commands.\n\n1. /help - We'll show all the available options\n2. /me - We'll show your COMPANY Profile\n3. /packages - We'll show the list of packages available in COMPANY",
     )
 
 
@@ -1094,7 +1094,7 @@ def packageselector(update: Update, _: CallbackContext) -> int:
     ):
         bot.send_message(
             chat_id,
-            text="Registration is successful. You will receive a message from our team shortly. 😉\n\n <b>Welcome to TRUSTMYSTOCKS</b>",
+            text="Registration is successful. You will receive a message from our team shortly. 😉\n\n <b>Welcome to Company</b>",
             parse_mode=ParseMode.HTML,
             reply_markup=ReplyKeyboardRemove(),
         )
@@ -1225,7 +1225,7 @@ def cancel(update: Update, _: CallbackContext) -> int:
 
 def todaysignal(update: Update, _: CallbackContext) -> int:
     update.message.reply_text(
-        f"🚨 <b>TMS SIGNAL</b> 🚨\n\nDate: {datetime.now().strftime('%m-%d-%Y')}\n\nTicker: \n\nCurrent Price: \n\nDirection: \n\nOptional STOP @ \n\nTake Profit @",
+        f"🚨 <b>COMPANY SIGNAL</b> 🚨\n\nDate: {datetime.now().strftime('%m-%d-%Y')}\n\nTicker: \n\nCurrent Price: \n\nDirection: \n\nOptional STOP @ \n\nTake Profit @",
         parse_mode=ParseMode.HTML,
     )
     return ConversationHandler.END

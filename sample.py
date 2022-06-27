@@ -10,10 +10,13 @@ cluster = MongoClient(
 if cluster:
     print("Connected")
 
-db = cluster["tms"]
-collection = db["members"]
+db = cluster["Signals"]
+collection = db["06-30-2021"]
 
 try:
-    print(collection.find({"_id": 1243113998}))
+    data = collection.find()
+    for i in data:
+        print(i["ticker"])
 except DuplicateKeyError as dke:
     print(dke)
+
