@@ -10,7 +10,7 @@ from telegram.ext import *
 from telegram_bot_calendar import LSTEP, DetailedTelegramCalendar
 
 cluster = MongoClient(
-    "mongodb+srv://lahfir:mslahfir@democluster.q6wxp.mongodb.net/demo-bot?ssl=true&ssl_cert_reqs=CERT_NONE"
+    "REMOVED THIS FOR SECURITY PURPOSE. COPY PASTE AGAIN FROM MONGODB ATLAS :)"
 )
 if cluster:
     print("Connected")
@@ -32,8 +32,8 @@ model = {
 # my_id = 1243113998
 # COMPANY = 879137704
 
-bot = Bot("1849417198:AAHR2-o8d20OJ4sVzBMuHbcj8_ZEzHCpMZs")
-updater = Updater("1849417198:AAHR2-o8d20OJ4sVzBMuHbcj8_ZEzHCpMZs", use_context=True)
+bot = Bot("REMOVED THIS FOR SECURITY PURPOSE. COPY PASTE AGAIN FROM BOTFATHER :)")
+updater = Updater("REMOVED THIS FOR SECURITY PURPOSE. COPY PASTE AGAIN FROM BOTFATHER :)", use_context=True)
 
 dispatcher = updater.dispatcher
 
